@@ -19,10 +19,9 @@ info:
     version: "@project.version@"
     spring-boot-version: "@project.parent.version@"
 
-girl:
+girlBean:
   name: chris
   age: 25
-  content: content:${name},age:${age}
 
 spring:
   profiles:

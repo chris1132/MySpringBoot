@@ -18,7 +18,7 @@ public class zookeeper_cluster {
         String node = "/node2";
         Stat stat = zk.exists(node,false);
         if(null == stat){
-            String createR = zk.create(node,"test".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.PERSISTENT);
+            String createR = zk.create(node,"boot1".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.PERSISTENT);
             System.out.print(createR);
         }
         byte b[] = zk.getData(node,false,stat);
