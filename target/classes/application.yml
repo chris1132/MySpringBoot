@@ -14,27 +14,22 @@ endpoints:
 
 info:
   app:
-    name: "chovy-study"
-    description: "Parent pom providing dependency and plugin management for applications
-		built with Maven"
-    version: "1.0-SNAPSHOT"
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"
     spring-boot-version: "@project.parent.version@"
-
-girlBean:
-  name: chris
-  age: 25
-
-spring:
-  profiles:
-    active: prod
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/chris_wang?useUnicode=true&characterEncoding=gbk&characterSetResults=gbk&useSSL=false
-    username: root
-    password: wch1132
-
-  jpa:
-    hibernate:
-      ddl-autp:
-    show-sql: true
+#
+#spring:
+#  profiles:
+#    active: prod
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/chris_wang?useUnicode=true&characterEncoding=gbk&characterSetResults=gbk&useSSL=false
+#    username: root
+#    password: wch1132
+#
+#  jpa:
+#    hibernate:
+#      ddl-autp:
+#    show-sql: true
 

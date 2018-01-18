@@ -1,4 +1,4 @@
-package com.chovy.boot1;
+package com.chovy.chris.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,14 +8,14 @@ import javax.persistence.Id;
  * Created by wangchaohui on 2017/9/7.
  */
 @Entity
-public class GirlMapperBean {
+public class Girl {
     @Id
     @GeneratedValue
     private Integer id;
     private String cupSize;
     private Integer age;
 
-    public GirlMapperBean() {
+    public Girl() {
     }
 
     public Integer getId() {
