@@ -18,7 +18,7 @@ public class GirlController {
 
     @RequestMapping(value = "/girl",method= RequestMethod.GET)
     public Girl getGirl(){
-        Girl girl = girlMapper.getGirl(1);
+        Girl girl = girlMapper.getGirlById(1);
         return girl;
     }
 }

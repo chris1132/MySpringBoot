@@ -1,4 +1,4 @@
-package com.boot1.common.config.datasource;
+package com.boot2.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -17,22 +19,23 @@ import javax.sql.DataSource;
 /**
  * Created by wangchaohui on 2018/1/19.
  */
-
 @Configuration
-@MapperScan(basePackages = "com.boot1.chris.mapper",sqlSessionTemplateRef = "chrisSqlSessionTemplate")
+@MapperScan(basePackages = "com.boot2.chris.persistent",sqlSessionTemplateRef = "chrisSqlSessionTemplate")
 @PropertySource(value = "classpath:datasource.properties")
 public class ChrisDataSourceConfig {
 
-    @Bean(name="chrisDataSource")
-    @ConfigurationProperties(prefix="spring.datasource.chris")
+
+    @Bean(name = "chrisDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.chris")
     public DataSource chrisDataSource() throws Exception{
         return DataSourceBuilder.create().build();
     }
 
     @Bean(name="chrisSqlSessionFactory")
     public SqlSessionFactory chrisSqlSessionFactory(@Qualifier("chrisDataSource") DataSource dataSource) throws Exception{
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        SqlSessionFactoryBean sqlSessionFactoryBean =new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/chris/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
@@ -41,8 +44,7 @@ public class ChrisDataSourceConfig {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
-    @Bean(name="chrisTransaction")
-    public DataSourceTransactionManager chrisTransaction(@Qualifier("chrisDataSource") DataSource dataSource) throws Exception{
+    public DataSourceTransactionManager chrisTransactionManager(@Qualifier("chrisDataSource") DataSource dataSource) throws Exception{
         return new DataSourceTransactionManager(dataSource);
     }
 }

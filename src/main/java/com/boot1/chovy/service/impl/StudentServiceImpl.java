@@ -15,7 +15,7 @@ public class StudentServiceImpl implements StudentService{
     @Autowired
     private StudentDao studentDao;
 
-    public Student getStudent(int id){
-       return studentDao.getStudent(id);
+    public Student getStudentById(int id){
+       return studentDao.getStudentById(id);
     }
 }

@@ -16,7 +16,7 @@ public class StudentController {
     @ResponseBody
     @RequestMapping(value="/hi",method = RequestMethod.GET)
     public String test(){
-        return studentService.getStudent(1).getName();
+        return studentService.getStudentById(1).getName();
     }
 
 }

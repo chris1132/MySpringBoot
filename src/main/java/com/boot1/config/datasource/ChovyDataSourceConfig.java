@@ -1,4 +1,4 @@
-package com.boot1.common.config.datasource;
+package com.boot1.config.datasource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

@@ -17,5 +17,5 @@ public interface GirlMapper {
             @Result(property = "cupSize",column = "cup_size"),
             @Result(property = "age",column = "age")
     })
-    Girl getGirl(@Param("id") int id);
+    Girl getGirlById(@Param("id") int id);
 }

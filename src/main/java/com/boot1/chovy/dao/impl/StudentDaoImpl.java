@@ -16,7 +16,7 @@ public class StudentDaoImpl implements StudentDao {
     private StudentMapper studentMapper;
 
 
-    public Student getStudent(int id){
-        return studentMapper.getStudent(id);
+    public Student getStudentById(int id){
+        return studentMapper.getStudentById(id);
     }
 }

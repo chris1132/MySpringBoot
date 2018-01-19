@@ -7,5 +7,5 @@ import com.boot1.chovy.entity.Student;
  */
 public interface StudentService {
 
-    Student getStudent(int id);
+    Student getStudentById(int id);
 }

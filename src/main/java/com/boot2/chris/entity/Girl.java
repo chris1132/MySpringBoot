@@ -1,8 +1,5 @@
-package com.boot1.chris.entity;
+package com.boot2.chris.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -11,7 +8,7 @@ import java.io.Serializable;
 
 public class Girl implements Serializable{
 
-    private static final long serialVersionUID = -6758782983098248711L;
+    private static final long serialVersionUID = -1906288575761614733L;
     private Integer id;
     private String cupSize;
     private Integer age;

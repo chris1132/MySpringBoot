@@ -12,5 +12,5 @@ public interface StudentMapper {
 
     @Select("select * from student where id = #{id}")
     @Results(value = {})
-    Student getStudent(@Param("id") int id);
+    Student getStudentById(@Param("id") int id);
 }
