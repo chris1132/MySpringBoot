@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 //exclude = DataSourceAutoConfiguration.class 将spring boot自带的DataSourceAutoConfiguration禁掉，因为它会默认读取application文件
 @SpringBootApplication
 @EnableScheduling
-public class ApplicationTest implements HealthIndicator {
+public class ApplicationTest2 implements HealthIndicator {
 
     @Override
     public Health health(){
@@ -20,6 +20,6 @@ public class ApplicationTest implements HealthIndicator {
     }
 
     public static void main(String[] args){
-        SpringApplication.run(ApplicationTest.class,args);
+        SpringApplication.run(ApplicationTest2.class,args);
     }
 }
