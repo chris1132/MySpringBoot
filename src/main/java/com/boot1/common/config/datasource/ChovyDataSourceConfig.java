@@ -20,7 +20,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan(basePackages = "com.boot1.chovy.mapper",sqlSessionTemplateRef = "chovySqlSessionTemplate")
-@PropertySource(value = "classpath:DataSource.properties")
+@PropertySource(value = "classpath:datasource.properties")
 public class ChovyDataSourceConfig {
 
     @Bean(name="chovyDataSource")

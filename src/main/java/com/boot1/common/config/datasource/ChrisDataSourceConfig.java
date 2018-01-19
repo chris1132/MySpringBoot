@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @MapperScan(basePackages = "com.boot1.chris.mapper",sqlSessionTemplateRef = "chrisSqlSessionTemplate")
-@PropertySource(value = "classpath:DataSource.properties")
+@PropertySource(value = "classpath:datasource.properties")
 public class ChrisDataSourceConfig {
 
     @Bean(name="chrisDataSource")
