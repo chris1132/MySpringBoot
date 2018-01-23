@@ -49,10 +49,15 @@
             <artifactId>zookeeper</artifactId>
             <version>3.4.11</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.kafka</groupId>-->
+            <!--<artifactId>kafka_2.12</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.12</artifactId>
-            <version>1.0.0</version>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>1.2.2.RELEASE</version>
         </dependency>
 
         <!-- alibaba的druid数据库连接池 -->
