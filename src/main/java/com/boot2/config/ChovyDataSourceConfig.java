@@ -20,34 +20,34 @@ import javax.sql.DataSource;
  * Created by wangchaohui on 2018/1/19.
  */
 @Configuration
-@MapperScan(basePackages = "com.boot2.chovy.persistent",sqlSessionTemplateRef = "chovySqlSessionTemplate")
+@MapperScan(basePackages = "com.boot2.chovy.persistent",sqlSessionTemplateRef = "chovySqlSessionTemplate2")
 @PropertySource(value = "classpath:datasource.properties")
 public class ChovyDataSourceConfig {
 
-    @Bean(name = "chovyDataSource")
+    @Bean(name = "chovyDataSource2")
     @ConfigurationProperties(prefix = "spring.datasource.chovy")
     @Primary
     public DataSource chovyDataSource() throws Exception{
         return DataSourceBuilder.create().build();
     }
 
-    @Bean(name="chovySqlSessionFactory")
+    @Bean(name="chovySqlSessionFactory2")
     @Primary
-    public SqlSessionFactory chovySqlSessionFactory(@Qualifier("chovyDataSource") DataSource dataSource) throws Exception{
+    public SqlSessionFactory chovySqlSessionFactory(@Qualifier("chovyDataSource2") DataSource dataSource) throws Exception{
         SqlSessionFactoryBean sqlSessionFactoryBean =new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/chovy/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
-    @Bean(name="chovySqlSessionTemplate")
+    @Bean(name="chovySqlSessionTemplate2")
     @Primary
-    public SqlSessionTemplate chovySqlSessionTemplate(@Qualifier("chovySqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception{
+    public SqlSessionTemplate chovySqlSessionTemplate(@Qualifier("chovySqlSessionFactory2") SqlSessionFactory sqlSessionFactory) throws Exception{
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
     @Primary
-    public DataSourceTransactionManager chovyTransactionManager(@Qualifier("chovyDataSource") DataSource dataSource) throws Exception{
+    public DataSourceTransactionManager chovyTransactionManager(@Qualifier("chovyDataSource2") DataSource dataSource) throws Exception{
         return new DataSourceTransactionManager(dataSource);
     }
 }

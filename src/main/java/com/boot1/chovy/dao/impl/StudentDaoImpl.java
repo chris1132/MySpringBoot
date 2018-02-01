@@ -6,6 +6,8 @@ import com.boot1.chovy.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by wangchaohui on 2018/1/18.
  */
@@ -18,5 +20,13 @@ public class StudentDaoImpl implements StudentDao {
 
     public Student getStudentById(int id){
         return studentMapper.getStudentById(id);
+    }
+
+    public void insert(Student student){
+        studentMapper.insert(student);
+    }
+
+    public List<Student> getList(){
+        return studentMapper.getList();
     }
 }
