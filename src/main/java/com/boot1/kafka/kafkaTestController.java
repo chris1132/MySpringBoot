@@ -14,18 +14,10 @@ public class kafkaTestController {
 
     @Autowired
     private MyKafkaProducer myKafkaProducer;
-    @Autowired
-    private MyKafkaConsumer myKafkaConsumer;
 
     @RequestMapping("/kafka")
     public String send(){
         myKafkaProducer.send("hello_");
-        return "success";
-    }
-
-    @RequestMapping("/kafka2")
-    public String get(){
-        myKafkaConsumer.get();
         return "success";
     }
 }

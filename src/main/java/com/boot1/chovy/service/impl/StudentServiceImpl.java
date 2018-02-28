@@ -1,7 +1,7 @@
 package com.boot1.chovy.service.impl;
 
-import com.boot1.chovy.dao.StudentDao;
 import com.boot1.chovy.entity.Student;
+import com.boot1.chovy.mapper.StudentMapper;
 import com.boot1.chovy.service.ListTurnInterface;
 import com.boot1.chovy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +18,18 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService{
 
     @Autowired
-    private StudentDao studentDao;
+    private StudentMapper studentMapper;
 
     public Student getStudentById(int id){
-       return studentDao.getStudentById(id);
+       return studentMapper.getStudentById(id);
     }
 
     public void insert(Student student){
-        studentDao.insert(student);
+        studentMapper.insert(student);
     }
 
     public List<Student> getList(){
-        return studentDao.getList();
+        return studentMapper.getList();
     }
 
     public List<String> getResList(){

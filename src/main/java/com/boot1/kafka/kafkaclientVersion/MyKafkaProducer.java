@@ -60,10 +60,12 @@ public class MyKafkaProducer{
             }
             List<PartitionInfo> partitions = new ArrayList<PartitionInfo>() ;
             partitions = producer.partitionsFor(TopicEnum.TOPIC_ONE.getName());
+            System.out.println("START----------------partitions");
             for(PartitionInfo p:partitions)
             {
                 System.out.println(p);
             }
+            System.out.println("END----------------partitions");
             producer.close(100, TimeUnit.MILLISECONDS);
         }catch (Exception e){
             e.printStackTrace();

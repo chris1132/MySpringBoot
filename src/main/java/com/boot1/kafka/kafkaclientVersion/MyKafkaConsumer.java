@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Created by wangchaohui on 2018/1/25.
@@ -36,16 +40,18 @@ public class MyKafkaConsumer{
         return consumerPros;
     }
 
-    public String get(){
+    private ScheduledExecutorService scheduledExecutorService= Executors.newScheduledThreadPool(5);
+
+    public void get(){
         Properties pro = this.getconsumerProperties();
         KafkaConsumer<String,String> consumer = new KafkaConsumer<String, String>(pro);
         consumer.subscribe(Arrays.asList(TopicEnum.TOPIC_ONE.getName()));
-        while(true){
-            ConsumerRecords<String,String> records = consumer.poll(100);
-            for(ConsumerRecord<String,String> record : records){
-                System.out.printf("offset = %d, key = %s, value = %s \n",
-                        record.offset(), record.key(), record.value());
-            }
+
+        ConsumerRecords<String,String> records = consumer.poll(100);
+        System.out.println("START----------------GET");
+        for(ConsumerRecord<String,String> record : records){
+            System.out.printf("offset = %d, key = %s, value = %s \n",
+                    record.offset(), record.key(), record.value());
         }
     }
 
