@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boot1.chris.mapper">
+    <resultMap id="GirlMap" type="com.boot1.chris.entity.Girl">
+        <result property="id" column=""/>
+        <result property="cupSize" column="cup_size"/>
+        <result property="age" column="age"/>
+    </resultMap>
+
+    <select id="getGirlById" parameterType="int" resultMap="GirlMap">
+        select * from girl where id = #{id}
+    </select>
+
+</mapper>
