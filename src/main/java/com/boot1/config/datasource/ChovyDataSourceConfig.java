@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
@@ -35,6 +36,7 @@ public class ChovyDataSourceConfig {
     public SqlSessionFactory chovySqlSessionFactory(@Qualifier("chovyDataSource") DataSource dataSource)throws Exception{
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/chovy/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
@@ -49,5 +51,4 @@ public class ChovyDataSourceConfig {
     public DataSourceTransactionManager chovyTransaction(@Qualifier("chovyDataSource") DataSource dataSource) throws Exception{
         return new DataSourceTransactionManager(dataSource);
     }
-
 }

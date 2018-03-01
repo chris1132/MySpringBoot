@@ -12,20 +12,10 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
  */
 public interface StudentMapper {
 
-    @Select("select * from student where id = #{id}")
-    @Results(value = {})
-    Student getStudentById(@Param("id") int id);
+    Student getStudentById(int id);
 
-    @Insert("insert into student(name,age,grade) values( #{name},#{age},#{grade}) ")
-    void insert(Student student);
+    int insert(Student student);
 
-    @Select("select * from student")
-    @Results({
-            @Result(property = "id",column = "id"),
-            @Result(property = "name",column = "name"),
-            @Result(property = "age",column = "age"),
-            @Result(property = "grade",column = "grade")
-    })
     List<Student> getList();
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.boot2.chovy.persistent.StudentPersistent">
-    <resultMap id="StudentMap" type="com.boot2.chovy.entity.Student">
+<mapper namespace="com.boot1.chovy.mapper.StudentMapper">
+    <resultMap id="StudentMap" type="com.boot1.chovy.entity.Student">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="age" column="age"/>
@@ -15,5 +15,19 @@
         select * from student where id = #{id}
     </select>
 
+    <insert id="insert" parameterType="com.boot1.chovy.entity.Student">
+        <![CDATA[
+            INSERT into student(name,age,grade) values(#{name},#{age},#{grade})
+        ]]>
+    </insert>
 
+    <select id="getList" resultMap="StudentMap">
+        <![CDATA[
+            select
+        ]]>
+        <include refid="Base_Column_List"/>
+        <![CDATA[
+            from student
+        ]]>
+    </select>
 </mapper>

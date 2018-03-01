@@ -12,10 +12,5 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface GirlMapper {
 
-    @Select("select * from girl where id = #{id}")
-    @Results({
-            @Result(property = "cupSize",column = "cup_size"),
-            @Result(property = "age",column = "age")
-    })
-    Girl getGirlById(@Param("id") int id);
+    Girl getGirlById(int id);
 }

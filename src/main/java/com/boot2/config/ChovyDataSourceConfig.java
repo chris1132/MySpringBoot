@@ -36,7 +36,6 @@ public class ChovyDataSourceConfig {
     public SqlSessionFactory chovySqlSessionFactory(@Qualifier("chovyDataSource2") DataSource dataSource) throws Exception{
         SqlSessionFactoryBean sqlSessionFactoryBean =new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/chovy/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
