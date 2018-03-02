@@ -1,6 +1,6 @@
-package com.boot1.kafka.kafkaclientVersion;
+package com.boot1.kafka.kafkaclient_version;
 
-import com.boot1.kafka.kafkaclientVersion.properties.KafKaProducerPropertiesBean;
+import com.boot1.kafka.kafkaclient_version.properties.KafKaProducerPropertiesBean;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.PartitionInfo;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import com.boot1.kafka.kafkaclientVersion.enums.*;
+import com.boot1.kafka.kafkaclient_version.enums.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

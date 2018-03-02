@@ -2,6 +2,7 @@ package com.boot1.chovy.controller;
 
 import com.boot1.chovy.entity.Student;
 import com.boot1.chovy.service.StudentService;
+import com.boot1.config.redis_config.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,8 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+
 
     @ResponseBody
     @RequestMapping(value="/hi",method = RequestMethod.GET)

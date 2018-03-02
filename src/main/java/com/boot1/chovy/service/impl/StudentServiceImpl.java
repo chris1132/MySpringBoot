@@ -4,6 +4,7 @@ import com.boot1.chovy.entity.Student;
 import com.boot1.chovy.mapper.StudentMapper;
 import com.boot1.chovy.service.ListTurnInterface;
 import com.boot1.chovy.service.StudentService;
+import com.boot1.config.redis_config.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,17 @@ public class StudentServiceImpl implements StudentService{
     @Autowired
     private StudentMapper studentMapper;
 
+    @Autowired
+    private RedisUtils redisUtils;
+
     public Student getStudentById(int id){
-       return studentMapper.getStudentById(id);
+        String cacheKey = "getStudentById_"+id;
+        Student s = (Student)redisUtils.get(cacheKey);
+        if(null==s){
+            s = studentMapper.getStudentById(id);
+            redisUtils.set(cacheKey,s,20L);
+        }
+       return s;
     }
 
     public void insert(Student student){

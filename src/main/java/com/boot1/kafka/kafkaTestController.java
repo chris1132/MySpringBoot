@@ -1,7 +1,6 @@
 package com.boot1.kafka;
 
-import com.boot1.kafka.kafkaclientVersion.MyKafkaConsumer;
-import com.boot1.kafka.kafkaclientVersion.MyKafkaProducer;
+import com.boot1.kafka.kafkaclient_version.MyKafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

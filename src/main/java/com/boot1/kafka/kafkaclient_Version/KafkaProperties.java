@@ -1,9 +1,8 @@
-package com.boot1.kafka.kafkaclientVersion;
+package com.boot1.kafka.kafkaclient_version;
 
-import com.boot1.kafka.kafkaclientVersion.properties.KafKaConsumerPropertiesBean;
-import com.boot1.kafka.kafkaclientVersion.properties.KafKaProducerPropertiesBean;
+import com.boot1.kafka.kafkaclient_version.properties.KafKaConsumerPropertiesBean;
+import com.boot1.kafka.kafkaclient_version.properties.KafKaProducerPropertiesBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 

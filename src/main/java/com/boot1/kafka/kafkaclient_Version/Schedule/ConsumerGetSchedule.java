@@ -1,6 +1,6 @@
-package com.boot1.kafka.kafkaclientVersion.Schedule;
+package com.boot1.kafka.kafkaclient_version.Schedule;
 
-import com.boot1.kafka.kafkaclientVersion.MyKafkaConsumer;
+import com.boot1.kafka.kafkaclient_version.MyKafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

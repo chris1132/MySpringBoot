@@ -1,7 +1,7 @@
-package com.boot1.kafka.kafkaclientVersion;
+package com.boot1.kafka.kafkaclient_version;
 
-import com.boot1.kafka.kafkaclientVersion.enums.TopicEnum;
-import com.boot1.kafka.kafkaclientVersion.properties.KafKaConsumerPropertiesBean;
+import com.boot1.kafka.kafkaclient_version.enums.TopicEnum;
+import com.boot1.kafka.kafkaclient_version.properties.KafKaConsumerPropertiesBean;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -46,7 +44,6 @@ public class MyKafkaConsumer{
         Properties pro = this.getconsumerProperties();
         KafkaConsumer<String,String> consumer = new KafkaConsumer<String, String>(pro);
         consumer.subscribe(Arrays.asList(TopicEnum.TOPIC_ONE.getName()));
-
         ConsumerRecords<String,String> records = consumer.poll(100);
         System.out.println("START----------------GET");
         for(ConsumerRecord<String,String> record : records){

@@ -4,6 +4,7 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 //exclude = DataSourceAutoConfiguration.class 将spring boot自带的DataSourceAutoConfiguration禁掉，因为它会默认读取application文件
 @SpringBootApplication
 @EnableScheduling
+@EnableCaching
 public class ApplicationTest implements HealthIndicator {
 
     @Override

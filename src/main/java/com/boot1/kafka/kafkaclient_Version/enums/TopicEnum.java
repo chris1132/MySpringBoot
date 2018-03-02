@@ -1,4 +1,4 @@
-package com.boot1.kafka.kafkaclientVersion.enums;
+package com.boot1.kafka.kafkaclient_version.enums;
 
 import java.util.HashMap;
 import java.util.Map;
