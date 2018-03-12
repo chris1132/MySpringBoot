@@ -15,4 +15,8 @@
 
 ---2018.03.02---
 增加redis，在boot.chovy 在service层进行缓存的读取存储；
+
+---2018.03.12---
+实现netty的一个简单demo，分别实现client和server，client发送一个消息，server接收到后给反馈。
+
 -------未完待续---------
