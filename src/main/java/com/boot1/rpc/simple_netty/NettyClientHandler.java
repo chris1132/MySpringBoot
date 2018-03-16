@@ -1,4 +1,4 @@
-package com.boot1.netty;
+package com.boot1.rpc.simple_netty;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

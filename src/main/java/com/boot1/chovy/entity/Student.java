@@ -12,6 +12,15 @@ public class Student implements Serializable {
     private Integer age;
     private Integer grade;
 
+    public Student() {
+    }
+
+    public Student(Integer id, String name, Integer age, Integer grade) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.grade = grade;
+    }
 
     public Integer getId() {
         return id;
@@ -43,5 +52,15 @@ public class Student implements Serializable {
 
     public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", grade=" + grade +
+                '}';
     }
 }

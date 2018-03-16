@@ -1,4 +1,4 @@
-package com.boot1.config.redis_config;
+package com.boot1.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

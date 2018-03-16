@@ -4,7 +4,7 @@ import com.boot1.chovy.entity.Student;
 import com.boot1.chovy.mapper.StudentMapper;
 import com.boot1.chovy.service.ListTurnInterface;
 import com.boot1.chovy.service.StudentService;
-import com.boot1.config.redis_config.RedisUtils;
+import com.boot1.redis.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

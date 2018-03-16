@@ -1,9 +1,8 @@
-package com.boot1.netty;
+package com.boot1.rpc.simple_netty;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-
 
 /**
  * Created by wangchaohui on 2018/3/12.
