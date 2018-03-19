@@ -62,7 +62,10 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
         channel.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
     }
 
+
     public RPCFuture sendRequest(RpcRequest request) {
+        //用CountDownLatch 解决线程假等待问题  计数器记为1
+        //因为如果用wait和notify，会造成线程发送request后，至线程进入wait状态等待数据返回期间，数据可能已经返回，导致线程一直wait
         final CountDownLatch latch = new CountDownLatch(1);
         RPCFuture rpcFuture = new RPCFuture(request);
         pendingRPC.put(request.getRequestId(), rpcFuture);
@@ -73,7 +76,7 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
             }
         });
         try {
-            latch.await();
+            latch.await();//一直阻塞当前线程，直到计时器的值为0，既调用countDown后计数-1。
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
         }

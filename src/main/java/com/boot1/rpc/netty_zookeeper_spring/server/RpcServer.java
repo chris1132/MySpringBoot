@@ -98,7 +98,7 @@ public class RpcServer implements InitializingBean {
                         @Override
                         public void initChannel(SocketChannel channel) throws Exception {
                             channel.pipeline()
-                                    .addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 0))
+                                    .addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 0))//tcp粘包处理，消息解码时，开始4个字节是消息长度
                                     .addLast(new RpcDecoder(RpcRequest.class))
                                     .addLast(new RpcEncoder(RpcResponse.class))
                                     .addLast(new RpcHandler(handlerMap));

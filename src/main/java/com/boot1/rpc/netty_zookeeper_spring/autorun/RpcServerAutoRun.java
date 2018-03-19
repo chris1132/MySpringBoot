@@ -52,10 +52,13 @@ public class RpcServerAutoRun implements ApplicationRunner,ApplicationContextAwa
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
         Map<String, Object> serviceBeanMap = ctx.getBeansWithAnnotation(RpcService.class);
         if (MapUtils.isNotEmpty(serviceBeanMap)) {
+//            for(Map.Entry entry:serviceBeanMap.entrySet()){
+//                handlerMap.put(entry.getKey().toString(),entry.getValue());
+//            }
             for (Object serviceBean : serviceBeanMap.values()) {
                 String interfaceName = serviceBean.getClass().getAnnotation(RpcService.class).value().getName();
-                logger.info("Loading service: {}", interfaceName);
-                handlerMap.put(interfaceName, serviceBean);
+                String[] interfaceatr = interfaceName.split("\\.");
+                handlerMap.put(interfaceatr[interfaceatr.length-1],serviceBean);
             }
         }
     }

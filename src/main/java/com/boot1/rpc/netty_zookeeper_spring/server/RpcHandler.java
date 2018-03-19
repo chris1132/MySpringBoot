@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by wangchaohui on 2018/3/16.
@@ -35,10 +36,11 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
                 RpcResponse response = new RpcResponse();
                 response.setRequestId(request.getRequestId());
                 try {
+                    //处理具体业务逻辑，利用反射，根据接口请求的方法参数，处理逻辑
                     Object result = handle(request);
                     System.out.println("Receive from client~~~~~~~~~~~~~~~~~:"+result.toString());
-
-                    response.setResult((Object)new String("世上只有妈妈好"));
+                    response.setResult(result);
+                    response.setCode(100);
                 } catch (Throwable t) {
                     response.setError(t.toString());
                     logger.error("RPC Server handle request error",t);
@@ -53,23 +55,16 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
         });
     }
 
+    /**
+     * 使用Cglib反射，处理业务
+     * */
     private Object handle(RpcRequest request) throws Throwable {
         String className = request.getClassName();
         Object serviceBean = handlerMap.get(className);
-
         Class<?> serviceClass = serviceBean.getClass();
         String methodName = request.getMethodName();
         Class<?>[] parameterTypes = request.getParameterTypes();
         Object[] parameters = request.getParameters();
-
-        logger.debug(serviceClass.getName());
-        logger.debug(methodName);
-        for (int i = 0; i < parameterTypes.length; ++i) {
-            logger.debug(parameterTypes[i].getName());
-        }
-        for (int i = 0; i < parameters.length; ++i) {
-            logger.debug(parameters[i].toString());
-        }
 
         // JDK reflect
         /*Method method = serviceClass.getMethod(methodName, parameterTypes);

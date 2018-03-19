@@ -53,21 +53,22 @@ public class ServiceDiscovery {
     }
 
     private ZooKeeper connectServer() {
-        ZooKeeper zk = null;
-        try {
-            zk = new ZooKeeper(registryAddress, Constant.ZK_SESSION_TIMEOUT, new Watcher() {
-                @Override
-                public void process(WatchedEvent event) {
-                    if (event.getState() == Event.KeeperState.SyncConnected) {
-                        latch.countDown();
+        if(null == zookeeper) {
+            try {
+                zookeeper = new ZooKeeper(registryAddress, Constant.ZK_SESSION_TIMEOUT, new Watcher() {
+                    @Override
+                    public void process(WatchedEvent event) {
+                        if (event.getState() == Event.KeeperState.SyncConnected) {
+                            latch.countDown();
+                        }
                     }
-                }
-            });
-            latch.await();
-        } catch (IOException | InterruptedException e) {
-            logger.error("", e);
+                });
+                latch.await();
+            } catch (IOException | InterruptedException e) {
+                logger.error("", e);
+            }
         }
-        return zk;
+        return zookeeper;
     }
 
     private void watchNode(final ZooKeeper zk) {

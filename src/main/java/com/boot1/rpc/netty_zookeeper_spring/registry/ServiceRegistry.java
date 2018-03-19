@@ -27,7 +27,8 @@ public class ServiceRegistry {
         if (data != null) {
             ZooKeeper zk = connectServer();
             if (zk != null) {
-                AddRootNode(zk); // Add root node if not exist
+                //判断根节点是否存在，不存在添加
+                AddRootNode(zk);
                 createNode(zk, data);
             }
         }
