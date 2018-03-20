@@ -22,16 +22,22 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by wangchaohui on 2018/3/16.
  */
-public class ConnectManage {
-    private static final Logger logger = LoggerFactory.getLogger(ConnectManage.class);
-    private volatile static ConnectManage connectManage;
+public class ZookeeperConnectManage {
+    private static final Logger logger = LoggerFactory.getLogger(ZookeeperConnectManage.class);
+    private volatile static ZookeeperConnectManage zookeeperConnectManage;
 
     private EventLoopGroup eventLoopGroup = new NioEventLoopGroup(4);
     private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(16, 16, 600L, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(65536));
 
+    /**
+     * 存储当前ip：port对应的已存在的节点
+     * */
     private CopyOnWriteArrayList<RpcClientHandler> connectedHandlers = new CopyOnWriteArrayList<>();
+
+    /**
+     * 存储当前ip：port对应的已存在的节点
+     * */
     private Map<InetSocketAddress, RpcClientHandler> connectedServerNodes = new ConcurrentHashMap<>();
-    //private Map<InetSocketAddress, Channel> connectedServerNodes = new ConcurrentHashMap<>();
 
     private ReentrantLock lock = new ReentrantLock();
     private Condition connected = lock.newCondition();
@@ -39,48 +45,44 @@ public class ConnectManage {
     private AtomicInteger roundRobin = new AtomicInteger(0);
     private volatile boolean isRuning = true;
 
-    private ConnectManage() {
+    private ZookeeperConnectManage() {
     }
 
-    public static ConnectManage getInstance() {
-        if (connectManage == null) {
-            synchronized (ConnectManage.class) {
-                if (connectManage == null) {
-                    connectManage = new ConnectManage();
+    public static ZookeeperConnectManage getInstance() {
+        if (zookeeperConnectManage == null) {
+            synchronized (ZookeeperConnectManage.class) {
+                if (zookeeperConnectManage == null) {
+                    zookeeperConnectManage = new ZookeeperConnectManage();
                 }
             }
         }
-        return connectManage;
+        return zookeeperConnectManage;
     }
 
     public void updateConnectedServer(List<String> allServerAddress) {
         if (allServerAddress != null) {
-            if (allServerAddress.size() > 0) {  // Get available server node
-                //update local serverNodes cache
+            if (allServerAddress.size() > 0) {
+                //更新现有的节点
                 HashSet<InetSocketAddress> newAllServerNodeSet = new HashSet<InetSocketAddress>();
                 for (int i = 0; i < allServerAddress.size(); ++i) {
                     String[] array = allServerAddress.get(i).split(":");
-                    if (array.length == 2) { // Should check IP and port
+                    if (array.length == 2) { // 一个allServerAddress的元素由ip和port两部分组成
                         String host = array[0];
                         int port = Integer.parseInt(array[1]);
                         final InetSocketAddress remotePeer = new InetSocketAddress(host, port);
                         newAllServerNodeSet.add(remotePeer);
+                        // 添加新的节点
+                        if (!connectedServerNodes.keySet().contains(remotePeer)) {
+                            connectServerNode(remotePeer);
+                        }
                     }
                 }
-
-                // Add new server node
-                for (final InetSocketAddress serverNodeAddress : newAllServerNodeSet) {
-                    if (!connectedServerNodes.keySet().contains(serverNodeAddress)) {
-                        connectServerNode(serverNodeAddress);
-                    }
-                }
-
-                // Close and remove invalid server nodes
+                // 关闭并移除无效的节点
                 for (int i = 0; i < connectedHandlers.size(); ++i) {
                     RpcClientHandler connectedServerHandler = connectedHandlers.get(i);
                     SocketAddress remotePeer = connectedServerHandler.getRemotePeer();
                     if (!newAllServerNodeSet.contains(remotePeer)) {
-                        logger.info("Remove invalid server node " + remotePeer);
+                        logger.info("移除无效节点：" + remotePeer);
                         RpcClientHandler handler = connectedServerNodes.get(remotePeer);
                         if (handler != null) {
                             handler.close();
@@ -89,9 +91,8 @@ public class ConnectManage {
                         connectedHandlers.remove(connectedServerHandler);
                     }
                 }
-
-            } else { // No available server node ( All server nodes are down )
-                logger.error("No available server node. All server nodes are down !!!");
+            }else{
+                logger.error("无有效的服务节点. 所有服务节点已挂 !!!");
                 for (final RpcClientHandler connectedServerHandler : connectedHandlers) {
                     SocketAddress remotePeer = connectedServerHandler.getRemotePeer();
                     RpcClientHandler handler = connectedServerNodes.get(remotePeer);
@@ -125,7 +126,7 @@ public class ConnectManage {
                     @Override
                     public void operationComplete(final ChannelFuture channelFuture) throws Exception {
                         if (channelFuture.isSuccess()) {
-                            logger.debug("Successfully connect to remote server. remote peer = " + remotePeer);
+                            logger.debug("成功连接至远程服务. remote peer = " + remotePeer);
                             RpcClientHandler handler = channelFuture.channel().pipeline().get(RpcClientHandler.class);
                             addHandler(handler);
                         }

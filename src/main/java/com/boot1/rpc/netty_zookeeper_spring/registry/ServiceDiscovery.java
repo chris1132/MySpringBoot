@@ -1,6 +1,6 @@
 package com.boot1.rpc.netty_zookeeper_spring.registry;
 
-import com.boot1.rpc.netty_zookeeper_spring.client.ConnectManage;
+import com.boot1.rpc.netty_zookeeper_spring.client.ZookeeperConnectManage;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
-//import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by wangchaohui on 2018/3/16.
@@ -27,48 +26,33 @@ public class ServiceDiscovery {
     private volatile List<String> dataList = new ArrayList<>();
 
     private String registryAddress;
-    private ZooKeeper zookeeper;
+    private ZooKeeper zookeeper = null;
 
     public ServiceDiscovery(String registryAddress) {
         this.registryAddress = registryAddress;
         zookeeper = connectServer();
         if (zookeeper != null) {
+            //查询服务地址，更新
             watchNode(zookeeper);
         }
     }
 
-    public String discover() {
-        String data = null;
-        int size = dataList.size();
-        if (size > 0) {
-            if (size == 1) {
-                data = dataList.get(0);
-                logger.debug("using only data: {}", data);
-            } else {
-                data = dataList.get(ThreadLocalRandom.current().nextInt(size));
-                logger.debug("using random data: {}", data);
-            }
-        }
-        return data;
-    }
-
     private ZooKeeper connectServer() {
-        if(null == zookeeper) {
-            try {
-                zookeeper = new ZooKeeper(registryAddress, Constant.ZK_SESSION_TIMEOUT, new Watcher() {
-                    @Override
-                    public void process(WatchedEvent event) {
-                        if (event.getState() == Event.KeeperState.SyncConnected) {
-                            latch.countDown();
-                        }
+        ZooKeeper zp = null;
+        try {
+            zp = new ZooKeeper(registryAddress, Constant.ZK_SESSION_TIMEOUT, new Watcher() {
+                @Override
+                public void process(WatchedEvent event) {
+                    if (event.getState() == Event.KeeperState.SyncConnected) {
+                        latch.countDown();
                     }
-                });
-                latch.await();
-            } catch (IOException | InterruptedException e) {
-                logger.error("", e);
-            }
+                }
+            });
+            latch.await();
+        } catch (IOException | InterruptedException e) {
+            logger.error("", e);
         }
-        return zookeeper;
+        return zp;
     }
 
     private void watchNode(final ZooKeeper zk) {
@@ -97,7 +81,7 @@ public class ServiceDiscovery {
     }
 
     private void UpdateConnectedServer(){
-        ConnectManage.getInstance().updateConnectedServer(this.dataList);
+        ZookeeperConnectManage.getInstance().updateConnectedServer(this.dataList);
     }
 
     public void stop(){
@@ -108,5 +92,19 @@ public class ServiceDiscovery {
                 logger.error("", e);
             }
         }
+    }
+    public String discover() {
+        String data = null;
+        int size = dataList.size();
+        if (size > 0) {
+            if (size == 1) {
+                data = dataList.get(0);
+                logger.debug("using only data: {}", data);
+            } else {
+                data = dataList.get(ThreadLocalRandom.current().nextInt(size));
+                logger.debug("using random data: {}", data);
+            }
+        }
+        return data;
     }
 }

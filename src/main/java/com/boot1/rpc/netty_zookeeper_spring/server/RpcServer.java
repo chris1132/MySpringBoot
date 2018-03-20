@@ -89,6 +89,7 @@ public class RpcServer implements InitializingBean {
     }
 
     public void start() throws Exception {
+
         if (bossGroup == null && workerGroup == null) {
             bossGroup = new NioEventLoopGroup();
             workerGroup = new NioEventLoopGroup();
@@ -118,7 +119,6 @@ public class RpcServer implements InitializingBean {
             if (serviceRegistry != null) {
                 serviceRegistry.register(serverAddress);
             }
-
             future.channel().closeFuture().sync();
         }
     }

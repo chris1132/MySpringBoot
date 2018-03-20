@@ -24,7 +24,7 @@ public class RpcServerAutoRun implements ApplicationRunner,ApplicationContextAwa
 
     private static Logger logger = LoggerFactory.getLogger(RpcServerAutoRun .class);
 
-    private Map<String, Object> handlerMap=new HashMap<>();
+    private static Map<String, Object> handlerMap=new HashMap<>();
 
     @Override
     public void run(ApplicationArguments args) throws Exception{
@@ -32,7 +32,6 @@ public class RpcServerAutoRun implements ApplicationRunner,ApplicationContextAwa
         ServiceRegistry serviceRegistry = new ServiceRegistry("127.0.0.1:2181");
         RpcServer rpcServer = new RpcServer(serverAddress, serviceRegistry);
 
-//
         rpcServer.handlerMap=handlerMap;
 
 //        HelloService helloService = new HelloServiceImpl();

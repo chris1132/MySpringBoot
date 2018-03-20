@@ -36,6 +36,7 @@ public class ServiceRegistry {
 
     private ZooKeeper connectServer() {
         ZooKeeper zk = null;
+
         try {
             zk = new ZooKeeper(registryAddress, Constant.ZK_SESSION_TIMEOUT, new Watcher() {
                 @Override

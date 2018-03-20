@@ -1,6 +1,6 @@
 package com.boot1.rpc.netty_zookeeper_spring.client.proxy;
 
-import com.boot1.rpc.netty_zookeeper_spring.client.ConnectManage;
+import com.boot1.rpc.netty_zookeeper_spring.client.ZookeeperConnectManage;
 import com.boot1.rpc.netty_zookeeper_spring.client.RPCFuture;
 import com.boot1.rpc.netty_zookeeper_spring.client.RpcClientHandler;
 import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcRequest;
@@ -37,7 +37,7 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObjectProxy {
     }
 
     public RPCFuture rpcFutureHandel(RpcRequest request){
-        RpcClientHandler handler = ConnectManage.getInstance().chooseHandler();
+        RpcClientHandler handler = ZookeeperConnectManage.getInstance().chooseHandler();
         RPCFuture rpcFuture = handler.sendRequest(request);
         return rpcFuture;
     }
@@ -108,7 +108,7 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObjectProxy {
         request.setParameterTypes(method.getParameterTypes());
         request.setParameters(args);
 
-        RpcClientHandler handler = ConnectManage.getInstance().chooseHandler();
+        RpcClientHandler handler = ZookeeperConnectManage.getInstance().chooseHandler();
         RPCFuture rpcFuture = handler.sendRequest(request);
         return rpcFuture.get();
     }

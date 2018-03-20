@@ -52,7 +52,7 @@ public class RpcClient {
     public void stop() {
         threadPoolExecutor.shutdown();
         serviceDiscovery.stop();
-        ConnectManage.getInstance().stop();
+        ZookeeperConnectManage.getInstance().stop();
     }
 }
 
