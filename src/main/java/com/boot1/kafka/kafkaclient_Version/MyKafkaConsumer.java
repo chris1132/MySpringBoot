@@ -2,6 +2,7 @@ package com.boot1.kafka.kafkaclient_version;
 
 import com.boot1.kafka.kafkaclient_version.enums.TopicEnum;
 import com.boot1.kafka.kafkaclient_version.properties.KafKaConsumerPropertiesBean;
+import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;

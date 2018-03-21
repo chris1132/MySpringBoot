@@ -1,4 +1,4 @@
-package com.boot1.rpc.netty_zookeeper_spring.protocol;
+package com.boot1.rpc.netty_zookeeper_spring.util;
 
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;

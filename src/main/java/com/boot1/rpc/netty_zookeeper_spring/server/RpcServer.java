@@ -1,10 +1,10 @@
 package com.boot1.rpc.netty_zookeeper_spring.server;
 
 
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcDecoder;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcEncoder;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcRequest;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcResponse;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcDecoder;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcEncoder;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcRequest;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcResponse;
 import com.boot1.rpc.netty_zookeeper_spring.registry.ServiceRegistry;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -88,8 +88,14 @@ public class RpcServer implements InitializingBean {
         return this;
     }
 
+    /**
+     * LengthFieldBasedFrameDecoder
+     * 1) lengthFieldOffset = 0；//长度字段的偏差
+     2) lengthFieldLength = 2；//长度字段占的字节数
+     3) lengthAdjustment = 0；//添加到长度字段的补偿值
+     4) initialBytesToStrip = 0。//从解码帧中第一次去除的字节数
+     * */
     public void start() throws Exception {
-
         if (bossGroup == null && workerGroup == null) {
             bossGroup = new NioEventLoopGroup();
             workerGroup = new NioEventLoopGroup();

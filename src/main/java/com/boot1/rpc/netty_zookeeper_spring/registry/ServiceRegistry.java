@@ -36,7 +36,6 @@ public class ServiceRegistry {
 
     private ZooKeeper connectServer() {
         ZooKeeper zk = null;
-
         try {
             zk = new ZooKeeper(registryAddress, Constant.ZK_SESSION_TIMEOUT, new Watcher() {
                 @Override
@@ -73,7 +72,7 @@ public class ServiceRegistry {
         try {
             byte[] bytes = data.getBytes();
             String path = zk.create(Constant.ZK_DATA_PATH, bytes, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
-            logger.debug("create zookeeper node ({} => {})", path, data);
+            logger.debug("创建zookeeper节点 ({} => {})", path, data);
         } catch (KeeperException e) {
             logger.error("", e);
         }

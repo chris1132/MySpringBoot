@@ -1,7 +1,7 @@
 package com.boot1.rpc.netty_zookeeper_spring.client;
 
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcRequest;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcResponse;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcRequest;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +81,6 @@ public class RPCFuture implements Future<Object> {
         this.response = reponse;
         sync.release(1);
         invokeCallbacks();
-        // Threshold
         long responseTime = System.currentTimeMillis() - startTime;
         if (responseTime > this.responseTimeThreshold) {
             logger.warn("Service response time is too slow. Request id = " + reponse.getRequestId() + ". Response Time = " + responseTime + "ms");

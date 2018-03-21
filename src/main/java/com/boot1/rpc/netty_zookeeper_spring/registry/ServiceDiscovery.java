@@ -73,7 +73,7 @@ public class ServiceDiscovery {
             logger.debug("node data: {}", dataList);
             this.dataList = dataList;
 
-            logger.debug("Service discovery triggered updating connected server node.");
+            logger.debug("更新服务节点.");
             UpdateConnectedServer();
         } catch (KeeperException | InterruptedException e) {
             logger.error("", e);
@@ -92,19 +92,5 @@ public class ServiceDiscovery {
                 logger.error("", e);
             }
         }
-    }
-    public String discover() {
-        String data = null;
-        int size = dataList.size();
-        if (size > 0) {
-            if (size == 1) {
-                data = dataList.get(0);
-                logger.debug("using only data: {}", data);
-            } else {
-                data = dataList.get(ThreadLocalRandom.current().nextInt(size));
-                logger.debug("using random data: {}", data);
-            }
-        }
-        return data;
     }
 }

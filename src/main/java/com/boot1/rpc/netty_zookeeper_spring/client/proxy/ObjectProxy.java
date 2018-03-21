@@ -3,7 +3,7 @@ package com.boot1.rpc.netty_zookeeper_spring.client.proxy;
 import com.boot1.rpc.netty_zookeeper_spring.client.ZookeeperConnectManage;
 import com.boot1.rpc.netty_zookeeper_spring.client.RPCFuture;
 import com.boot1.rpc.netty_zookeeper_spring.client.RpcClientHandler;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcRequest;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

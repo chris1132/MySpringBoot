@@ -1,7 +1,7 @@
 package com.boot1.rpc.netty_zookeeper_spring.client;
 
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcRequest;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcResponse;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcRequest;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcResponse;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import org.slf4j.Logger;

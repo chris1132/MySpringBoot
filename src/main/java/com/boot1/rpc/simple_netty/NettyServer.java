@@ -14,7 +14,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class NettyServer {
 
-    //defined port
     private int port=9999;
     private String host="127.0.0.1";
 

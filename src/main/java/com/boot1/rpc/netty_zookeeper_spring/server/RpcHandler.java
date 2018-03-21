@@ -1,7 +1,7 @@
 package com.boot1.rpc.netty_zookeeper_spring.server;
 
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcRequest;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcResponse;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcRequest;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcResponse;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by wangchaohui on 2018/3/16.

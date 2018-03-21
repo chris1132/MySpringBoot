@@ -1,10 +1,10 @@
 package com.boot1.rpc.netty_zookeeper_spring.client;
 
 
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcDecoder;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcEncoder;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcRequest;
-import com.boot1.rpc.netty_zookeeper_spring.protocol.RpcResponse;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcDecoder;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcEncoder;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcRequest;
+import com.boot1.rpc.netty_zookeeper_spring.util.RpcResponse;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

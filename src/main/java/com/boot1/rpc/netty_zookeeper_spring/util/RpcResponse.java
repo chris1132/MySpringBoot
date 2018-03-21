@@ -1,4 +1,4 @@
-package com.boot1.rpc.netty_zookeeper_spring.protocol;
+package com.boot1.rpc.netty_zookeeper_spring.util;
 
 /**
  * Created by wangchaohui on 2018/3/16.
