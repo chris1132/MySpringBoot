@@ -4,6 +4,7 @@ import com.boot1.chovy.entity.Student;
 import com.boot1.chovy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -15,8 +16,6 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
-
-
 
     @ResponseBody
     @RequestMapping(value="/hi",method = RequestMethod.GET)

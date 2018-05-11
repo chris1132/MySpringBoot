@@ -13,7 +13,7 @@ public class ZookeeperStateSchedule {
 
     @Scheduled(cron = "15 * * * * ?")
     public void cron(){
-        System.out.println("ZookeeperStateSchedule Schedule----------------Start");
+//        System.out.println("ZookeeperStateSchedule Schedule----------------Start");
 //        ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
     }
 }

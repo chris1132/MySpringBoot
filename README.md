@@ -55,4 +55,18 @@ boot2 多数据原配置，通过注解的形式
 ---2018.03.16---
 接上，client端传类名、方法名、以及参数，server接收后利用cglib处理，将结果返回。
 逻辑流程：com.boot1.chovy.controller.RpcController开始
+
+---2018.03.20---
+加入了freemarker 写了个例子 LoveShowController
+简单配置了nginx  把js、css和工程分离
+server{
+    listen 80;
+    server_name www.dzgj.com;
+    location / {
+        proxy_pass http://127.0.0.1:8088/;
+    }
+    location ~* \.(html|css|js)$ {
+    	root D:/IdeaProjects/MySpringBoot/src/main/resources/static;
+    }
+}
 -------未完待续---------
