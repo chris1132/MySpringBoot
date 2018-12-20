@@ -27,7 +27,7 @@ public class ServiceRegistry {
         if (data != null) {
             ZooKeeper zk = connectServer();
             if (zk != null) {
-                //åˆ¤æ–­æ ¹èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨æ·»åŠ 
+                //ÅÐ¶Ï¸ù½ÚµãÊÇ·ñ´æÔÚ£¬²»´æÔÚÌí¼Ó
                 AddRootNode(zk);
                 createNode(zk, data);
             }
@@ -48,14 +48,13 @@ public class ServiceRegistry {
             latch.await();
         } catch (IOException e) {
             logger.error("", e);
-        }
-        catch (InterruptedException ex){
+        } catch (InterruptedException ex) {
             logger.error("", ex);
         }
         return zk;
     }
 
-    private void AddRootNode(ZooKeeper zk){
+    private void AddRootNode(ZooKeeper zk) {
         try {
             Stat s = zk.exists(Constant.ZK_REGISTRY_PATH, false);
             if (s == null) {
@@ -72,11 +71,10 @@ public class ServiceRegistry {
         try {
             byte[] bytes = data.getBytes();
             String path = zk.create(Constant.ZK_DATA_PATH, bytes, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
-            logger.debug("åˆ›å»ºzookeeperèŠ‚ç‚¹ ({} => {})", path, data);
+            logger.debug("´´½¨zookeeper½Úµã ({} => {})", path, data);
         } catch (KeeperException e) {
             logger.error("", e);
-        }
-        catch (InterruptedException ex){
+        } catch (InterruptedException ex) {
             logger.error("", ex);
         }
     }

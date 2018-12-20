@@ -5,6 +5,6 @@ package com.boot1.rpc.socket;
  */
 public class Server {
 
-   // public
+    // public
 
 }

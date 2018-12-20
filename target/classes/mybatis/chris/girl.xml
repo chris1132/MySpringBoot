@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.boot1.chris.mapper">
+<mapper namespace="com.boot1.chris.mapper.GirlMapper">
     <resultMap id="GirlMap" type="com.boot1.chris.entity.Girl">
         <result property="id" column=""/>
         <result property="cupSize" column="cup_size"/>

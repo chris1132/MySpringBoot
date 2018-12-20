@@ -14,15 +14,15 @@ import org.springframework.stereotype.Service;
  * Created by wangchaohui on 2018/5/11.
  */
 @Service
-public class WechatServiceImpl implements WechatService{
+public class WechatServiceImpl implements WechatService {
 
-    public Code2SessionResponse code2Session(String code){
-        String url = ContextUtil.code_2_sessionkey_url.replace("APPID",ContextUtil.app_id).replace("SECRET",ContextUtil.secret).replace("JSCODE",code);
-        Code2SessionResponse jsonRes =(Code2SessionResponse)JSONUtil.strToBean(HttpUtil.httpRequest(url,"POST",null),Code2SessionResponse.class);
+    public Code2SessionResponse code2Session(String code) {
+        String url = ContextUtil.code_2_sessionkey_url.replace("APPID", ContextUtil.app_id).replace("SECRET", ContextUtil.secret).replace("JSCODE", code);
+        Code2SessionResponse jsonRes = (Code2SessionResponse) JSONUtil.strToBean(HttpUtil.httpRequest(url, "POST", null), Code2SessionResponse.class);
         return jsonRes;
     }
 
-    public String getThirdSession(String value) throws CheckedExceptionUtil{
+    public String getThirdSession(String value) throws CheckedExceptionUtil {
         return MD5.getMD5String(value);
     }
 }

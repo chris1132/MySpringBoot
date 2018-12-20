@@ -1,7 +1,6 @@
 package com.boot1.rpc.netty_zookeeper_spring.testmain;
 
 
-
 import com.boot1.chovy.entity.Student;
 import com.boot1.rpc.netty_zookeeper_spring.client.RPCFuture;
 import com.boot1.rpc.netty_zookeeper_spring.client.RpcClient;
@@ -15,28 +14,28 @@ import java.util.concurrent.TimeUnit;
  */
 public class RpcClientMain {
 
-public static void main(String[] args){
+    public static void main(String[] args) {
 
-    ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
-    final RpcClient rpcClient = new RpcClient(serviceDiscovery);
-    // Sync call
+        ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
+        final RpcClient rpcClient = new RpcClient(serviceDiscovery);
+        // Sync call
 //    BaseOpenService helloService = rpcClient.create(BaseOpenService.class);
-//    String result = helloService.Hello("å¤§å®¶å¥½ï¼Œæˆ‘é«˜å…´");
+//    String result = helloService.Hello("´ó¼ÒºÃ£¬ÎÒ¸ßĞË");
 
-    // Async call
+        // Async call
 //    IAsyncObjectProxy client = rpcClient.createAsync(BaseOpenService.class);
-    /**
-     * by chovy
-     * åœ¨è¿™é‡Œåšäº†æ”¹æ­£ï¼Œclientä¼ åˆ°serverçš„requeståˆ©å°è£…çš„classnameä¸åº”è¯¥ç”¨xx.classçš„æ–¹å¼å»å–
-     * å› ä¸ºæ­£å¸¸æ¥è¯´,clientçš„åŒ…é‡Œé‡Œä¸åº”è¯¥åˆ›å»ºserveré‡Œä¸šåŠ¡å®ç°ç›¸å…³çš„å¯¹è±¡,æ‰€ä»¥clientåªä¼ ä¸€ä¸ªæ–¹æ³•
-     * */
-    IAsyncObjectProxy client = rpcClient.createAsync();
-    RPCFuture helloFuture = client.call("HelloService","Hello", new Student(1,"chris",11,18));
-    try {
-        String result2 = (String) helloFuture.get(3000, TimeUnit.MILLISECONDS);
-        System.out.println("2______________________:"+result2);
-    }catch(Exception e){
-        e.printStackTrace();
+        /**
+         * by chovy
+         * ÔÚÕâÀï×öÁË¸ÄÕı£¬client´«µ½serverµÄrequestÀû·â×°µÄclassname²»Ó¦¸ÃÓÃxx.classµÄ·½Ê½È¥È¡
+         * ÒòÎªÕı³£À´Ëµ,clientµÄ°üÀïÀï²»Ó¦¸Ã´´½¨serverÀïÒµÎñÊµÏÖÏà¹ØµÄ¶ÔÏó,ËùÒÔclientÖ»´«Ò»¸ö·½·¨
+         * */
+        IAsyncObjectProxy client = rpcClient.createAsync();
+        RPCFuture helloFuture = client.call("HelloService", "Hello", new Student(1, "chris", 11, 18));
+        try {
+            String result2 = (String) helloFuture.get(3000, TimeUnit.MILLISECONDS);
+            System.out.println("2______________________:" + result2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
 }

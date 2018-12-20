@@ -6,19 +6,19 @@ import java.util.Map;
 /**
  * Created by wangchaohui on 2018/1/25.
  */
-public enum  TopicEnum {
+public enum TopicEnum {
 
-    TOPIC_ONE(1,"Mytopic");
+    TOPIC_ONE(1, "Mytopic");
 
     private int id;
     private String name;
 
-    private TopicEnum(int id,String name){
+    private TopicEnum(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    private static final Map<Integer,TopicEnum> integerToEnum = new HashMap<Integer,TopicEnum>();
+    private static final Map<Integer, TopicEnum> integerToEnum = new HashMap<Integer, TopicEnum>();
 
     static {
         for (TopicEnum enum1 : values()) {

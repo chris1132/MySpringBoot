@@ -5,31 +5,33 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 /**
- * ç±»æè¿°ï¼šè¯ä¹¦ä¿¡ä»»ç®¡ç†å™¨ï¼ˆç”¨äºhttpsè¯·æ±‚ï¼‰ç¼–å†™è¯ä¹¦è¿‡æ»¤å™¨
+ * ÀàÃèÊö£ºÖ¤ÊéĞÅÈÎ¹ÜÀíÆ÷£¨ÓÃÓÚhttpsÇëÇó£©±àĞ´Ö¤Êé¹ıÂËÆ÷
  * Created by wangchaohui on 2018/5/10.
- * */
-public class MyX509TrustManager implements X509TrustManager{	
-	/**
-	 * è¯¥æ–¹æ³•ä½“ä¸ºç©ºæ—¶ä¿¡ä»»æ‰€æœ‰å®¢æˆ·ç«¯è¯ä¹¦(æ£€æŸ¥å®¢æˆ·ç«¯è¯ä¹¦)
-	 */
-	@Override
-	public void checkClientTrusted(X509Certificate[] chain, String authType)
-			throws CertificateException {	
-	}
-	
-	/**
-	 * è¯¥æ–¹æ³•ä½“ä¸ºç©ºæ—¶ä¿¡ä»»æ‰€æœ‰æœåŠ¡å™¨è¯ä¹¦Â (æ£€æŸ¥æœåŠ¡å™¨è¯ä¹¦)
-	 */
-	@Override
-	public void checkServerTrusted(X509Certificate[] chain, String authType)
-			throws CertificateException {	
-	}
-	
-	/**è¿”å›ä¿¡ä»»çš„è¯ä¹¦
-	Â *Â @returnÂ Â Â 
-	Â */
-	@Override
-	public X509Certificate[] getAcceptedIssuers() {
-		return null;
-	}
+ */
+public class MyX509TrustManager implements X509TrustManager {
+    /**
+     * ¸Ã·½·¨ÌåÎª¿ÕÊ±ĞÅÈÎËùÓĞ¿Í»§¶ËÖ¤Êé(¼ì²é¿Í»§¶ËÖ¤Êé)
+     */
+    @Override
+    public void checkClientTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+    }
+
+    /**
+     * ¸Ã·½·¨ÌåÎª¿ÕÊ±ĞÅÈÎËùÓĞ·şÎñÆ÷Ö¤Êé?(¼ì²é·şÎñÆ÷Ö¤Êé)
+     */
+    @Override
+    public void checkServerTrusted(X509Certificate[] chain, String authType)
+            throws CertificateException {
+    }
+
+    /**
+     * ·µ»ØĞÅÈÎµÄÖ¤Êé
+     * ?*?@return???
+     * ?
+     */
+    @Override
+    public X509Certificate[] getAcceptedIssuers() {
+        return null;
+    }
 }

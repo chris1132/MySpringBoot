@@ -10,12 +10,12 @@ public class SessionUser implements Serializable {
     private static final long serialVersionUID = -5272401653937165074L;
     /**
      * 本服务器sessionid
-     * */
+     */
     private String sessionId;
 
     /**
      * w微信sessionkey-opid组合
-     * */
+     */
     private String wxSession;
 
     private Integer uid;

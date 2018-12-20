@@ -9,50 +9,52 @@ import java.io.*;
 import java.net.URLEncoder;
 
 /**
- * ç±»æè¿°ï¼šhttpè¯·æ±‚å’Œæ¥æ”¶
+ * ÀàÃèÊö£ºhttpÇëÇóºÍ½ÓÊÕ
  * Created by wangchaohui on 2018/5/10.
- * */
+ */
 public class CommonUtil {
 
-	private static Logger log = LoggerFactory.getLogger(CommonUtil.class);
-	
-	/**
-	 * URLç¼–ç (utf-8)
-	 * @param source
-	 * @return String
-	 */
-	public static String urlEncodeUTF8(String source) {
-		String result=source;
-		try {
-			result=URLEncoder.encode(source, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	/**
-	 * æ ¹æ®ç±»å‹åˆ¤æ–­æ–‡ä»¶æ‰©å±•å
-	 * @param contentType å†…å®¹ç±»å‹
-	 * @return String
-	 */
-	public static String getFileExt(String contentType) {
-		String fileExt="";
-		if ("image/jpeg".equals(contentType)) {
-			fileExt=".jpg";
-		}else if ("audio/mpeg".equals(contentType)) {
-			fileExt=".mp3";
-		}else if ("audio/amr".equals(contentType)) {
-			fileExt=".amr";
-		}else if ("video/mp4".equals(contentType)) {
-			fileExt=".mp4";
-		}else if ("video/mpeg4".equals(contentType)) {
-			fileExt=".mp4";
-		}
-		return fileExt;
-	}
-	
-	public static void main(String[] args) {
+    private static Logger log = LoggerFactory.getLogger(CommonUtil.class);
 
-	}
+    /**
+     * URL±àÂë(utf-8)
+     *
+     * @param source
+     * @return String
+     */
+    public static String urlEncodeUTF8(String source) {
+        String result = source;
+        try {
+            result = URLEncoder.encode(source, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * ¸ù¾İÀàĞÍÅĞ¶ÏÎÄ¼şÀ©Õ¹Ãû
+     *
+     * @param contentType ÄÚÈİÀàĞÍ
+     * @return String
+     */
+    public static String getFileExt(String contentType) {
+        String fileExt = "";
+        if ("image/jpeg".equals(contentType)) {
+            fileExt = ".jpg";
+        } else if ("audio/mpeg".equals(contentType)) {
+            fileExt = ".mp3";
+        } else if ("audio/amr".equals(contentType)) {
+            fileExt = ".amr";
+        } else if ("video/mp4".equals(contentType)) {
+            fileExt = ".mp4";
+        } else if ("video/mpeg4".equals(contentType)) {
+            fileExt = ".mp4";
+        }
+        return fileExt;
+    }
+
+    public static void main(String[] args) {
+
+    }
 }

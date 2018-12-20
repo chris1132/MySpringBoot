@@ -30,13 +30,13 @@ public class ZookeeperConnectManage {
     private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(16, 16, 600L, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(65536));
 
     /**
-     * å­˜å‚¨å½“å‰ipï¼športå¯¹åº”çš„å·²å­˜åœ¨çš„èŠ‚ç‚¹
-     * */
+     * ´æ´¢µ±Ç°ip£ºport¶ÔÓ¦µÄÒÑ´æÔÚµÄ½Úµã
+     */
     private CopyOnWriteArrayList<RpcClientHandler> connectedHandlers = new CopyOnWriteArrayList<>();
 
     /**
-     * å­˜å‚¨å½“å‰ipï¼športå¯¹åº”çš„å·²å­˜åœ¨çš„èŠ‚ç‚¹
-     * */
+     * ´æ´¢µ±Ç°ip£ºport¶ÔÓ¦µÄÒÑ´æÔÚµÄ½Úµã
+     */
     private Map<InetSocketAddress, RpcClientHandler> connectedServerNodes = new ConcurrentHashMap<>();
 
     private ReentrantLock lock = new ReentrantLock();
@@ -62,27 +62,27 @@ public class ZookeeperConnectManage {
     public void updateConnectedServer(List<String> allServerAddress) {
         if (allServerAddress != null) {
             if (allServerAddress.size() > 0) {
-                //æ›´æ–°ç°æœ‰çš„èŠ‚ç‚¹
+                //¸üĞÂÏÖÓĞµÄ½Úµã
                 HashSet<InetSocketAddress> newAllServerNodeSet = new HashSet<InetSocketAddress>();
                 for (int i = 0; i < allServerAddress.size(); ++i) {
                     String[] array = allServerAddress.get(i).split(":");
-                    if (array.length == 2) { // ä¸€ä¸ªallServerAddressçš„å…ƒç´ ç”±ipå’Œportä¸¤éƒ¨åˆ†ç»„æˆ
+                    if (array.length == 2) { // Ò»¸öallServerAddressµÄÔªËØÓÉipºÍportÁ½²¿·Ö×é³É
                         String host = array[0];
                         int port = Integer.parseInt(array[1]);
                         final InetSocketAddress remotePeer = new InetSocketAddress(host, port);
                         newAllServerNodeSet.add(remotePeer);
-                        // æ·»åŠ æ–°çš„èŠ‚ç‚¹
+                        // Ìí¼ÓĞÂµÄ½Úµã
                         if (!connectedServerNodes.keySet().contains(remotePeer)) {
                             connectServerNode(remotePeer);
                         }
                     }
                 }
-                // å…³é—­å¹¶ç§»é™¤æ— æ•ˆçš„èŠ‚ç‚¹
+                // ¹Ø±Õ²¢ÒÆ³ıÎŞĞ§µÄ½Úµã
                 for (int i = 0; i < connectedHandlers.size(); ++i) {
                     RpcClientHandler connectedServerHandler = connectedHandlers.get(i);
                     SocketAddress remotePeer = connectedServerHandler.getRemotePeer();
                     if (!newAllServerNodeSet.contains(remotePeer)) {
-                        logger.info("ç§»é™¤æ— æ•ˆèŠ‚ç‚¹ï¼š" + remotePeer);
+                        logger.info("ÒÆ³ıÎŞĞ§½Úµã£º" + remotePeer);
                         RpcClientHandler handler = connectedServerNodes.get(remotePeer);
                         if (handler != null) {
                             handler.close();
@@ -91,8 +91,8 @@ public class ZookeeperConnectManage {
                         connectedHandlers.remove(connectedServerHandler);
                     }
                 }
-            }else{
-                logger.error("æ— æœ‰æ•ˆçš„æœåŠ¡èŠ‚ç‚¹. æ‰€æœ‰æœåŠ¡èŠ‚ç‚¹å·²æŒ‚ !!!");
+            } else {
+                logger.error("ÎŞÓĞĞ§µÄ·şÎñ½Úµã. ËùÓĞ·şÎñ½ÚµãÒÑ¹Ò !!!");
                 for (final RpcClientHandler connectedServerHandler : connectedHandlers) {
                     SocketAddress remotePeer = connectedServerHandler.getRemotePeer();
                     RpcClientHandler handler = connectedServerNodes.get(remotePeer);
@@ -126,7 +126,7 @@ public class ZookeeperConnectManage {
                     @Override
                     public void operationComplete(final ChannelFuture channelFuture) throws Exception {
                         if (channelFuture.isSuccess()) {
-                            logger.debug("æˆåŠŸè¿æ¥è‡³è¿œç¨‹æœåŠ¡. remote peer = " + remotePeer);
+                            logger.debug("³É¹¦Á¬½ÓÖÁÔ¶³Ì·şÎñ. remote peer = " + remotePeer);
                             RpcClientHandler handler = channelFuture.channel().pipeline().get(RpcClientHandler.class);
                             addHandler(handler);
                         }

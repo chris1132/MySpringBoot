@@ -32,7 +32,7 @@ public class ServiceDiscovery {
         this.registryAddress = registryAddress;
         zookeeper = connectServer();
         if (zookeeper != null) {
-            //æŸ¥è¯¢æœåŠ¡åœ°å€ï¼Œæ›´æ–°
+            //²éÑ¯·şÎñµØÖ·£¬¸üĞÂ
             watchNode(zookeeper);
         }
     }
@@ -73,19 +73,19 @@ public class ServiceDiscovery {
             logger.debug("node data: {}", dataList);
             this.dataList = dataList;
 
-            logger.debug("æ›´æ–°æœåŠ¡èŠ‚ç‚¹.");
+            logger.debug("¸üĞÂ·şÎñ½Úµã.");
             UpdateConnectedServer();
         } catch (KeeperException | InterruptedException e) {
             logger.error("", e);
         }
     }
 
-    private void UpdateConnectedServer(){
+    private void UpdateConnectedServer() {
         ZookeeperConnectManage.getInstance().updateConnectedServer(this.dataList);
     }
 
-    public void stop(){
-        if(zookeeper!=null){
+    public void stop() {
+        if (zookeeper != null) {
             try {
                 zookeeper.close();
             } catch (InterruptedException e) {

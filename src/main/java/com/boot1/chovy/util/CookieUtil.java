@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public final class CookieUtil {
 
-      //cookie中自动登录的path
-      private static String COOKIE_PATH = "/";
+    //cookie中自动登录的path
+    private static String COOKIE_PATH = "/";
 
     /**
      * 获取cookies值
+     *
      * @param request
      * @param name
      * @return
@@ -22,7 +23,7 @@ public final class CookieUtil {
     public static Cookie getCookie(HttpServletRequest request, String name) {
         Cookie cookies[] = request.getCookies();
         if (cookies == null || name == null || name.length() == 0) {
-          return null;
+            return null;
         }
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(name)) return cookie;
@@ -32,6 +33,7 @@ public final class CookieUtil {
 
     /**
      * 获取cookies值
+     *
      * @param request
      * @param name
      * @return
@@ -39,7 +41,7 @@ public final class CookieUtil {
     public static String getCookieValue(HttpServletRequest request, String name) {
         Cookie cookies[] = request.getCookies();
         if (cookies == null || name == null || name.length() == 0) {
-          return "";
+            return "";
         }
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(name)) return cookie.getValue();
@@ -47,26 +49,26 @@ public final class CookieUtil {
         return "";
     }
 
-      public static void deleteCookie(HttpServletRequest request,
-          HttpServletResponse response, Cookie cookie) {
+    public static void deleteCookie(HttpServletRequest request,
+                                    HttpServletResponse response, Cookie cookie) {
         if (cookie != null) {
-          cookie.setPath(COOKIE_PATH);
-          cookie.setValue("");
-          cookie.setMaxAge(0);
-          response.addCookie(cookie);
+            cookie.setPath(COOKIE_PATH);
+            cookie.setValue("");
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
         }
-      }
+    }
 
-      public static void setCookie(HttpServletRequest request,
-          HttpServletResponse response, String name, String value) {
+    public static void setCookie(HttpServletRequest request,
+                                 HttpServletResponse response, String name, String value) {
         setCookie(request, response, name, value, 3600);
-      }
+    }
 
-      public static void setCookie(HttpServletRequest request,
-          HttpServletResponse response, String name, String value, int maxAge) {
+    public static void setCookie(HttpServletRequest request,
+                                 HttpServletResponse response, String name, String value, int maxAge) {
         Cookie cookie = new Cookie(name, value == null ? "" : value);
         cookie.setMaxAge(maxAge);
         cookie.setPath(COOKIE_PATH);
         response.addCookie(cookie);
-      }
+    }
 }

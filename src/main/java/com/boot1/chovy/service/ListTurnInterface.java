@@ -5,7 +5,7 @@ package com.boot1.chovy.service;
  */
 
 @FunctionalInterface
-public interface ListTurnInterface<F,T> {
+public interface ListTurnInterface<F, T> {
 
     T concert(F f);
 }

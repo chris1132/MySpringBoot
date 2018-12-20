@@ -14,16 +14,16 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  */
 public class NettyClient {
 
-    public void connect(String host,int port)throws Exception{
+    public void connect(String host, int port) throws Exception {
         EventLoopGroup workGroup = new NioEventLoopGroup();
-        try{
+        try {
             Bootstrap b = new Bootstrap();
             b.group(workGroup)
                     .channel(NioSocketChannel.class)
-                    .option(ChannelOption.SO_KEEPALIVE,true)
+                    .option(ChannelOption.SO_KEEPALIVE, true)
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        public void initChannel(SocketChannel ch)throws Exception{
+                        public void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline()
 //                                    .addLast("decoder",new StringDecoder(CharsetUtil.UTF_8))
 //                                    .addLast("encoder",new StringDecoder(CharsetUtil.UTF_8))
@@ -31,15 +31,15 @@ public class NettyClient {
 
                         }
                     });
-            ChannelFuture f = b.connect(host,port).sync();
+            ChannelFuture f = b.connect(host, port).sync();
             f.channel().closeFuture().sync();
-        }finally{
+        } finally {
             workGroup.shutdownGracefully();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        NettyClient client=new NettyClient();
+        NettyClient client = new NettyClient();
         client.connect("127.0.0.1", 9998);
     }
 }

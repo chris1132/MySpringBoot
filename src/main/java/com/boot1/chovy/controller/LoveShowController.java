@@ -12,21 +12,21 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class LoveShowController {
 
-    @RequestMapping(value = "/show1.htm",method = RequestMethod.GET)
-    public ModelAndView show(ModelAndView md ){
+    @RequestMapping(value = "/show1.htm", method = RequestMethod.GET)
+    public ModelAndView show(ModelAndView md) {
         md.setViewName("love1/lovetree");
         return md;
     }
 
 
-    @RequestMapping(value = "/show2.htm",method = RequestMethod.GET)
-    public ModelAndView show2(ModelAndView md ){
+    @RequestMapping(value = "/show2.htm", method = RequestMethod.GET)
+    public ModelAndView show2(ModelAndView md) {
         md.setViewName("love2/lovetree2");
         return md;
     }
 
-    @RequestMapping(value = "/show3",method = RequestMethod.GET)
-    public ModelAndView show3(ModelAndView md ){
+    @RequestMapping(value = "/show3", method = RequestMethod.GET)
+    public ModelAndView show3(ModelAndView md) {
         md.setViewName("love2/index.html");
         return md;
     }

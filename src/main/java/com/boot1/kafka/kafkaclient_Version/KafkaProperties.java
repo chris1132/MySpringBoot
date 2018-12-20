@@ -22,8 +22,8 @@ public class KafkaProperties {
 
     private Properties consumerPros;
 
-    public Properties getproducerProperties(){
-        if(null == producerProps){
+    public Properties getproducerProperties() {
+        if (null == producerProps) {
             producerProps = new Properties();
             producerProps.put("bootstrap.servers", producerPro.getBootstrapServer());
             producerProps.put("acks", producerPro.getAcks());
@@ -37,8 +37,8 @@ public class KafkaProperties {
         return producerProps;
     }
 
-    public Properties getconsumerProperties(){
-        if(null == consumerPros){
+    public Properties getconsumerProperties() {
+        if (null == consumerPros) {
             consumerPros = new Properties();
             consumerPros.put("bootstrap.servers", consumerPro.getBootstrapServer());
             consumerPros.put("group.id", consumerPro.getGroupId());

@@ -18,15 +18,15 @@ import java.util.concurrent.ScheduledExecutorService;
  * Created by wangchaohui on 2018/1/25.
  */
 @Component
-public class MyKafkaConsumer{
+public class MyKafkaConsumer {
 
     @Autowired
     private KafKaConsumerPropertiesBean consumerPro;
 
     private Properties consumerPros;
 
-    public Properties getconsumerProperties(){
-        if(null == consumerPros){
+    public Properties getconsumerProperties() {
+        if (null == consumerPros) {
             consumerPros = new Properties();
             consumerPros.put("bootstrap.servers", consumerPro.getBootstrapServer());
             consumerPros.put("group.id", consumerPro.getGroupId());
@@ -39,15 +39,15 @@ public class MyKafkaConsumer{
         return consumerPros;
     }
 
-    private ScheduledExecutorService scheduledExecutorService= Executors.newScheduledThreadPool(5);
+    private ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(5);
 
-    public void get(){
+    public void get() {
         Properties pro = this.getconsumerProperties();
-        KafkaConsumer<String,String> consumer = new KafkaConsumer<String, String>(pro);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(pro);
         consumer.subscribe(Arrays.asList(TopicEnum.TOPIC_ONE.getName()));
-        ConsumerRecords<String,String> records = consumer.poll(100);
+        ConsumerRecords<String, String> records = consumer.poll(100);
         System.out.println("START----------------GET");
-        for(ConsumerRecord<String,String> record : records){
+        for (ConsumerRecord<String, String> record : records) {
             System.out.printf("offset = %d, key = %s, value = %s \n",
                     record.offset(), record.key(), record.value());
         }

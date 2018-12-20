@@ -35,7 +35,7 @@ public class RpcServer implements InitializingBean {
     private String serverAddress;
     private ServiceRegistry serviceRegistry;
 
-    public Map<String, Object> handlerMap=new HashMap<>();
+    public Map<String, Object> handlerMap = new HashMap<String, Object>();
 
     private static ThreadPoolExecutor threadPoolExecutor;
 
@@ -78,8 +78,9 @@ public class RpcServer implements InitializingBean {
         threadPoolExecutor.submit(task);
     }
 
-    /**addserviceæ‰‹åŠ¨ç»™handlerMapæ·»åŠ å®ç°æ–¹æ³•ï¼Œæµ‹è¯•ç”¨
-     * */
+    /**
+     * addserviceÊÖ¶¯¸øhandlerMapÌí¼ÓÊµÏÖ·½·¨£¬²âÊÔÓÃ
+     */
     public RpcServer addService(String interfaceName, Object serviceBean) {
         if (!handlerMap.containsKey(interfaceName)) {
             logger.info("Loading service: {}", interfaceName);
@@ -90,11 +91,11 @@ public class RpcServer implements InitializingBean {
 
     /**
      * LengthFieldBasedFrameDecoder
-     * 1) lengthFieldOffset = 0ï¼›//é•¿åº¦å­—æ®µçš„åå·®
-     2) lengthFieldLength = 2ï¼›//é•¿åº¦å­—æ®µå çš„å­—èŠ‚æ•°
-     3) lengthAdjustment = 0ï¼›//æ·»åŠ åˆ°é•¿åº¦å­—æ®µçš„è¡¥å¿å€¼
-     4) initialBytesToStrip = 0ã€‚//ä»è§£ç å¸§ä¸­ç¬¬ä¸€æ¬¡å»é™¤çš„å­—èŠ‚æ•°
-     * */
+     * 1) lengthFieldOffset = 0£»//³¤¶È×Ö¶ÎµÄÆ«²î
+     * 2) lengthFieldLength = 2£»//³¤¶È×Ö¶ÎÕ¼µÄ×Ö½ÚÊı
+     * 3) lengthAdjustment = 0£»//Ìí¼Óµ½³¤¶È×Ö¶ÎµÄ²¹³¥Öµ
+     * 4) initialBytesToStrip = 0¡£//´Ó½âÂëÖ¡ÖĞµÚÒ»´ÎÈ¥³ıµÄ×Ö½ÚÊı
+     */
     public void start() throws Exception {
         if (bossGroup == null && workerGroup == null) {
             bossGroup = new NioEventLoopGroup();
@@ -105,7 +106,7 @@ public class RpcServer implements InitializingBean {
                         @Override
                         public void initChannel(SocketChannel channel) throws Exception {
                             channel.pipeline()
-                                    .addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 0))//tcpç²˜åŒ…å¤„ç†ï¼Œæ¶ˆæ¯è§£ç æ—¶ï¼Œå¼€å§‹4ä¸ªå­—èŠ‚æ˜¯æ¶ˆæ¯é•¿åº¦
+                                    .addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 0))//tcpÕ³°ü´¦Àí£¬ÏûÏ¢½âÂëÊ±£¬¿ªÊ¼4¸ö×Ö½ÚÊÇÏûÏ¢³¤¶È
                                     .addLast(new RpcDecoder(RpcRequest.class))
                                     .addLast(new RpcEncoder(RpcResponse.class))
                                     .addLast(new RpcHandler(handlerMap));
@@ -120,8 +121,8 @@ public class RpcServer implements InitializingBean {
 
             ChannelFuture future = bootstrap.bind(host, port).sync();
             logger.info("Server started on port {}", port);
-            System.out.println("++++++++++++++++++++++TCPæœåŠ¡å™¨å·²å¯åŠ¨++++++++++++++++++++++");
-            //æœåŠ¡ç«¯ä½¿ç”¨zookeeperæ³¨å†ŒæœåŠ¡åœ°å€
+            System.out.println("++++++++++++++++++++++TCP·şÎñÆ÷ÒÑÆô¶¯++++++++++++++++++++++");
+            //·şÎñ¶ËÊ¹ÓÃzookeeper×¢²á·şÎñµØÖ·
             if (serviceRegistry != null) {
                 serviceRegistry.register(serverAddress);
             }

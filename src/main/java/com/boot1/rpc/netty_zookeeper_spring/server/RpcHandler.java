@@ -27,7 +27,7 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
     }
 
     @Override
-    public void channelRead0(final ChannelHandlerContext ctx,final RpcRequest request) throws Exception {
+    public void channelRead0(final ChannelHandlerContext ctx, final RpcRequest request) throws Exception {
         RpcServer.submit(new Runnable() {
             @Override
             public void run() {
@@ -35,14 +35,14 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
                 RpcResponse response = new RpcResponse();
                 response.setRequestId(request.getRequestId());
                 try {
-                    //å¤„ç†å…·ä½“ä¸šåŠ¡é€»è¾‘ï¼Œåˆ©ç”¨åå°„ï¼Œæ ¹æ®æ¥å£è¯·æ±‚çš„æ–¹æ³•å‚æ•°ï¼Œå¤„ç†é€»è¾‘
+                    //´¦Àí¾ßÌåÒµÎñÂß¼­£¬ÀûÓÃ·´Éä£¬¸ù¾İ½Ó¿ÚÇëÇóµÄ·½·¨²ÎÊı£¬´¦ÀíÂß¼­
                     Object result = handle(request);
-                    System.out.println("Receive from client~~~~~~~~~~~~~~~~~:"+result.toString());
+                    System.out.println("Receive from client~~~~~~~~~~~~~~~~~:" + result.toString());
                     response.setResult(result);
                     response.setCode(100);
                 } catch (Throwable t) {
                     response.setError(t.toString());
-                    logger.error("RPC Server handle request error",t);
+                    logger.error("RPC Server handle request error", t);
                 }
                 ctx.writeAndFlush(response).addListener(new ChannelFutureListener() {
                     @Override
@@ -55,8 +55,8 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
     }
 
     /**
-     * ä½¿ç”¨Cglibåå°„ï¼Œå¤„ç†ä¸šåŠ¡
-     * */
+     * Ê¹ÓÃCglib·´Éä£¬´¦ÀíÒµÎñ
+     */
     private Object handle(RpcRequest request) throws Throwable {
         String className = request.getClassName();
         Object serviceBean = handlerMap.get(className);

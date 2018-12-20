@@ -64,8 +64,8 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
 
 
     public RPCFuture sendRequest(RpcRequest request) {
-        //ç”¨CountDownLatch è§£å†³çº¿ç¨‹å‡ç­‰å¾…é—®é¢˜  è®¡æ•°å™¨è®°ä¸º1
-        //å› ä¸ºå¦‚æœç”¨waitå’Œnotifyï¼Œä¼šé€ æˆçº¿ç¨‹å‘é€requeståï¼Œè‡³çº¿ç¨‹è¿›å…¥waitçŠ¶æ€ç­‰å¾…æ•°æ®è¿”å›æœŸé—´ï¼Œæ•°æ®å¯èƒ½å·²ç»è¿”å›ï¼Œå¯¼è‡´çº¿ç¨‹ä¸€ç›´wait
+        //ÓÃCountDownLatch ½â¾öÏß³Ì¼ÙµÈ´ıÎÊÌâ  ¼ÆÊıÆ÷¼ÇÎª1
+        //ÒòÎªÈç¹ûÓÃwaitºÍnotify£¬»áÔì³ÉÏß³Ì·¢ËÍrequestºó£¬ÖÁÏß³Ì½øÈëwait×´Ì¬µÈ´ıÊı¾İ·µ»ØÆÚ¼ä£¬Êı¾İ¿ÉÄÜÒÑ¾­·µ»Ø£¬µ¼ÖÂÏß³ÌÒ»Ö±wait
         final CountDownLatch latch = new CountDownLatch(1);
         RPCFuture rpcFuture = new RPCFuture(request);
         pendingRPC.put(request.getRequestId(), rpcFuture);
@@ -76,7 +76,7 @@ public class RpcClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
             }
         });
         try {
-            latch.await();//ä¸€ç›´é˜»å¡å½“å‰çº¿ç¨‹ï¼Œç›´åˆ°è®¡æ—¶å™¨çš„å€¼ä¸º0ï¼Œæ—¢è°ƒç”¨countDownåè®¡æ•°-1ã€‚
+            latch.await();//Ò»Ö±×èÈûµ±Ç°Ïß³Ì£¬Ö±µ½¼ÆÊ±Æ÷µÄÖµÎª0£¬¼Èµ÷ÓÃcountDownºó¼ÆÊı-1¡£
         } catch (InterruptedException e) {
             logger.error(e.getMessage());
         }

@@ -18,24 +18,24 @@ public class WechatLoginController {
     @Autowired
     private WechatService wechatService;
 
-    @RequestMapping(value = "/codeCheck",method = RequestMethod.POST)
+    @RequestMapping(value = "/codeCheck", method = RequestMethod.POST)
     @ResponseBody
-    public String check(@RequestParam(value = "code",required = true) String code,
-            HttpServletRequest req, HttpServletResponse res) throws Exception{
+    public String check(@RequestParam(value = "code", required = true) String code,
+                        HttpServletRequest req, HttpServletResponse res) throws Exception {
         Code2SessionResponse result = wechatService.code2Session(code);
 
-        String value = result.getOpenid()+"_"+result.getSession_key();
+        String value = result.getOpenid() + "_" + result.getSession_key();
         String thirdSessionId = wechatService.getThirdSession(value);
-        req.getSession().setAttribute(thirdSessionId,new SessionUser(value,null,null,null));
+        req.getSession().setAttribute(thirdSessionId, new SessionUser(value, null, null, null));
         return thirdSessionId;
     }
 
-    //TODOÊ£ÄÊü•Âπ≥Âè∞Á¨¨‰∏âÊñπsessionÁöÑÊúâÊïàÊÄß
-    @RequestMapping(value = "/thirdSessionIdCheck",method = RequestMethod.POST)
+    //TODOºÏ≤È∆ΩÃ®µ⁄»˝∑Ωsessionµƒ”––ß–‘
+    @RequestMapping(value = "/thirdSessionIdCheck", method = RequestMethod.POST)
     @ResponseBody
     public int thirdSessionIdCheck(HttpServletRequest req, HttpServletResponse res,
-                                      @RequestParam(value = "thirdSessionId",required = true)String thirdSessionId){
-        SessionUser sessionUser = (SessionUser)req.getSession().getAttribute(thirdSessionId);
-        return sessionUser==null? 0:1;
+                                   @RequestParam(value = "thirdSessionId", required = true) String thirdSessionId) {
+        SessionUser sessionUser = (SessionUser) req.getSession().getAttribute(thirdSessionId);
+        return sessionUser == null ? 0 : 1;
     }
 }

@@ -14,60 +14,57 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class NettyServer {
 
-    private int port=9999;
-    private String host="127.0.0.1";
+    private int port = 9999;
+    private String host = "127.0.0.1";
 
-    public NettyServer(String host,int port){
+    public NettyServer(String host, int port) {
         this.host = host;
         this.port = port;
     }
 
-    public void run(){
-        //EventLoop è¿™ä¸ªç›¸å½“äºä¸€ä¸ªå¤„ç†çº¿ç¨‹ï¼Œæ˜¯Nettyæ¥æ”¶è¯·æ±‚å’Œå¤„ç†IOè¯·æ±‚çš„çº¿ç¨‹ã€‚
-        //EventLoopGroup å¯ä»¥ç†è§£ä¸ºå°†å¤šä¸ªEventLoopè¿›è¡Œåˆ†ç»„ç®¡ç†çš„ä¸€ä¸ªç±»ï¼Œæ˜¯EventLoopçš„ä¸€ä¸ªç»„ã€‚
+    public void run() {
+        //EventLoop Õâ¸öÏàµ±ÓÚÒ»¸ö´¦ÀíÏß³Ì£¬ÊÇNetty½ÓÊÕÇëÇóºÍ´¦ÀíIOÇëÇóµÄÏß³Ì¡£
+        //EventLoopGroup ¿ÉÒÔÀí½âÎª½«¶à¸öEventLoop½øĞĞ·Ö×é¹ÜÀíµÄÒ»¸öÀà£¬ÊÇEventLoopµÄÒ»¸ö×é¡£
 
-        //ç”¨æ¥æ¥æ”¶è¿›æ¥çš„è¿æ¥
+        //ÓÃÀ´½ÓÊÕ½øÀ´µÄÁ¬½Ó
         EventLoopGroup mainGroup = new NioEventLoopGroup();
-        //ç”¨æ¥å¤„ç†å·²ç»è¢«æ¥æ”¶çš„è¿æ¥
+        //ÓÃÀ´´¦ÀíÒÑ¾­±»½ÓÊÕµÄÁ¬½Ó
         EventLoopGroup workGroup = new NioEventLoopGroup();
 
         NioEventLoopGroup nioEventLoopGroup = new NioEventLoopGroup();
-        try{
-            //è¿™æ˜¯ä¸€ä¸ªå¯¹æœåŠ¡ç«¯åšé…ç½®å’Œå¯åŠ¨çš„ç±»,å¯åŠ¨nioæœåŠ¡çš„è¾…åŠ©å¯åŠ¨ç±»,
+        try {
+            //ÕâÊÇÒ»¸ö¶Ô·şÎñ¶Ë×öÅäÖÃºÍÆô¶¯µÄÀà,Æô¶¯nio·şÎñµÄ¸¨ÖúÆô¶¯Àà,
             ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(mainGroup,workGroup)
-                    .channel(NioServerSocketChannel.class)
+            /**1¡¢°ó¶¨Á½¸öÏß³Ì×éÀ´´¦Àí¿Í»§¶ËÍ¨µÀµÄacceptºÍ¶ÁĞ´ÊÂ¼ş*/
+            bootstrap.group(mainGroup, workGroup)
+                    .channel(NioServerSocketChannel.class)/**2¡¢°ó¶¨·şÎñ¶ËÍ¨µÀNioServerSocketChannel*/
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        public void initChannel(SocketChannel ch)throws Exception{
-                            //æ³¨å†ŒEettyServerHandler
-                            //ç”¨äºåˆå§‹åŒ–Channelçš„pipelineï¼Œä»¥å¤„ç†è¯·æ±‚å†…å®¹ã€‚
-                            System.out.println("------initChannel ch------:" + ch);
+                        public void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline()
-//                                    .addLast("decoder",new StringDecoder(CharsetUtil.UTF_8))
-//                                    .addLast("encoder",new StringDecoder(CharsetUtil.UTF_8))
                                     .addLast(new NettyServerHandler());
                         }
                     })
-                    .option(ChannelOption.SO_BACKLOG,128)//è®¾ç½®Socketè¿æ¥çš„å‚æ•°
-                    .childOption(ChannelOption.SO_KEEPALIVE,true);
-            /**ä¸Šè¿°æ˜¯å¯¹ServerBootstrap çš„é…ç½®*/
+                    .option(ChannelOption.SO_BACKLOG, 128)//ÉèÖÃSocketÁ¬½ÓµÄ²ÎÊı
+                    .childOption(ChannelOption.SO_KEEPALIVE, true);
+            /**ÉÏÊöÊÇ¶ÔServerBootstrap µÄÅäÖÃ*/
 
-            //ç»‘å®šç«¯å£ï¼Œæ¥æ”¶è¿æ¥
+            //°ó¶¨¶Ë¿Ú£¬½ÓÊÕÁ¬½Ó
+            /**4¡¢¼àÌı¶Ë¿Ú*/
 //            bootstrap.bind(port).sync();
             ChannelFuture channelFuture = bootstrap.bind(port).sync();
-            System.out.println("TCPæœåŠ¡å™¨å·²å¯åŠ¨");
-            //ç­‰å¾…æœåŠ¡å™¨socketå…³é—­
+            System.out.println("TCP·şÎñÆ÷ÒÑÆô¶¯");
+            //µÈ´ı·şÎñÆ÷socket¹Ø±Õ
             channelFuture.channel().closeFuture().sync();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             workGroup.shutdownGracefully();
             mainGroup.shutdownGracefully();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        new NettyServer("127.0.0.1",9998).run();
+        new NettyServer("127.0.0.1", 9998).run();
     }
 }

@@ -19,15 +19,15 @@ public class kafkaTestController {
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @RequestMapping("/kafka")
-    public String send(){
-        Callable<Integer> callable=new  Callable<Integer> (){
-            public Integer call(){
+    public String send() {
+        Callable<Integer> callable = new Callable<Integer>() {
+            public Integer call() {
                 return 1;
             }
         };
         Future<Integer> result = executorService.submit(callable);
         try {
-            System.out.println("å­çº¿ç¨‹æ‰§è¡Œç»“æœ:"+result.get());
+            System.out.println("×ÓÏß³ÌÖ´ĞĞ½á¹û:" + result.get());
         } catch (Exception e) {
             e.printStackTrace();
         }

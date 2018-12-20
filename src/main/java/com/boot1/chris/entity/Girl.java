@@ -1,15 +1,13 @@
 package com.boot1.chris.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
 import java.io.Serializable;
 
 /**
  * Created by wangchaohui on 2017/9/7.
  */
 
-public class Girl implements Serializable{
+public class Girl implements Serializable {
 
     private static final long serialVersionUID = -6758782983098248711L;
     private Integer id;

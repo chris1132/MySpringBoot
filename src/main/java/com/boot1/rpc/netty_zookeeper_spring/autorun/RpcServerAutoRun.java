@@ -20,19 +20,19 @@ import java.util.Map;
  * Created by wangchaohui on 2018/3/16.
  */
 @Component
-public class RpcServerAutoRun implements ApplicationRunner,ApplicationContextAware {
+public class RpcServerAutoRun implements ApplicationRunner, ApplicationContextAware {
 
-    private static Logger logger = LoggerFactory.getLogger(RpcServerAutoRun .class);
+    private static Logger logger = LoggerFactory.getLogger(RpcServerAutoRun.class);
 
-    private static Map<String, Object> handlerMap=new HashMap<>();
+    private static Map<String, Object> handlerMap = new HashMap<>();
 
     @Override
-    public void run(ApplicationArguments args) throws Exception{
+    public void run(ApplicationArguments args) throws Exception {
         String serverAddress = "127.0.0.1:18866";
         ServiceRegistry serviceRegistry = new ServiceRegistry("127.0.0.1:2181");
         RpcServer rpcServer = new RpcServer(serverAddress, serviceRegistry);
 
-        rpcServer.handlerMap=handlerMap;
+        rpcServer.handlerMap = handlerMap;
 
 //        HelloService helloService = new HelloServiceImpl();
 //        rpcServer.addService("HelloService", helloService);
@@ -45,8 +45,8 @@ public class RpcServerAutoRun implements ApplicationRunner,ApplicationContextAwa
     }
 
     /**
-     * æœåŠ¡åœ¨å¯åŠ¨çš„æ—¶å€™æ‰«æå¾—åˆ°æ‰€æœ‰çš„æœåŠ¡æ¥å£åŠå…¶å®ç°ï¼š
-     * */
+     * ·şÎñÔÚÆô¶¯µÄÊ±ºòÉ¨ÃèµÃµ½ËùÓĞµÄ·şÎñ½Ó¿Ú¼°ÆäÊµÏÖ£º
+     */
     @Override
     public void setApplicationContext(ApplicationContext ctx) throws BeansException {
         Map<String, Object> serviceBeanMap = ctx.getBeansWithAnnotation(RpcService.class);
@@ -57,7 +57,7 @@ public class RpcServerAutoRun implements ApplicationRunner,ApplicationContextAwa
             for (Object serviceBean : serviceBeanMap.values()) {
                 String interfaceName = serviceBean.getClass().getAnnotation(RpcService.class).value().getName();
                 String[] interfaceatr = interfaceName.split("\\.");
-                handlerMap.put(interfaceatr[interfaceatr.length-1],serviceBean);
+                handlerMap.put(interfaceatr[interfaceatr.length - 1], serviceBean);
             }
         }
     }

@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -18,14 +20,28 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObjectProxy {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectProxy.class);
     private Class<T> clazz;
 
-    public ObjectProxy(){}
+    private static final Map<String, Object> typeNameMap = new HashMap<String, Object>();
+
+    static {
+        typeNameMap.put("java.lang.Integer", Integer.TYPE);
+        typeNameMap.put("java.lang.Long", Long.TYPE);
+        typeNameMap.put("java.lang.Float", Float.TYPE);
+        typeNameMap.put("java.lang.Double", Double.TYPE);
+        typeNameMap.put("java.lang.Character", Character.TYPE);
+        typeNameMap.put("java.lang.Boolean", Boolean.TYPE);
+        typeNameMap.put("java.lang.Short", Short.TYPE);
+        typeNameMap.put("java.lang.Byte", Byte.TYPE);
+    }
+
+    public ObjectProxy() {
+    }
 
     public ObjectProxy(Class<T> clazz) {
         this.clazz = clazz;
     }
 
     @Override
-    public RPCFuture call(String className,String funcName, Object... args){
+    public RPCFuture call(String className, String funcName, Object... args) {
         RpcRequest request = createRequest(className, funcName, args);
         return rpcFutureHandel(request);
     }
@@ -36,7 +52,7 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObjectProxy {
         return rpcFutureHandel(request);
     }
 
-    public RPCFuture rpcFutureHandel(RpcRequest request){
+    public RPCFuture rpcFutureHandel(RpcRequest request) {
         RpcClientHandler handler = ZookeeperConnectManage.getInstance().chooseHandler();
         RPCFuture rpcFuture = handler.sendRequest(request);
         return rpcFuture;
@@ -59,29 +75,10 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObjectProxy {
         return request;
     }
 
-    private Class<?> getClassType(Object obj){
+    private Class<?> getClassType(Object obj) {
         Class<?> classType = obj.getClass();
         String typeName = classType.getName();
-        switch (typeName){
-            case "java.lang.Integer":
-                return Integer.TYPE;
-            case "java.lang.Long":
-                return Long.TYPE;
-            case "java.lang.Float":
-                return Float.TYPE;
-            case "java.lang.Double":
-                return Double.TYPE;
-            case "java.lang.Character":
-                return Character.TYPE;
-            case "java.lang.Boolean":
-                return Boolean.TYPE;
-            case "java.lang.Short":
-                return Short.TYPE;
-            case "java.lang.Byte":
-                return Byte.TYPE;
-        }
-
-        return classType;
+        return (Class<?>) typeNameMap.get(typeName);
     }
 
     @Override

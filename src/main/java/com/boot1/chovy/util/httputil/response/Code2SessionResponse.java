@@ -6,21 +6,21 @@ package com.boot1.chovy.util.httputil.response;
 public class Code2SessionResponse {
 
     /**
-     *	鐢ㄦ埛鍞竴鏍囪瘑
-     * */
+     * 用户唯一标识
+     */
     private String openid;
 
 
     /**
-     * 瀵圭敤鎴锋暟鎹繘琛屽姞瀵嗙鍚嶇殑瀵嗛挜
-     *	浼氳瘽瀵嗛挜
-     * */
+     * 对用户数据进行加密签名的密钥
+     * 会话密钥
+     */
     private String session_key;
 
 
     /**
-     *	鐢ㄦ埛鍦ㄥ紑鏀惧钩鍙扮殑鍞竴鏍囪瘑绗︺�傛湰瀛楁鍦ㄦ弧瓒充竴瀹氭潯浠剁殑鎯呭喌涓嬫墠杩斿洖
-     * */
+     * 用户在开放平台的唯一标识符。本字段在满足一定条件的情况下才返回
+     */
     private String unionid;
 
 

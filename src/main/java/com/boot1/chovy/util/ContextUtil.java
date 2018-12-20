@@ -15,7 +15,7 @@ public class ContextUtil {
     public final static String secret = "c8de20295533dcda206fef894cb2eaac";
 
     /**
-     * å¼€å‘è€…æœåŠ¡å™¨ä½¿ç”¨ç™»å½•å‡­è¯ code è·å– session_key å’Œ openid
-     * */
+     * ¿ª·¢Õß·şÎñÆ÷Ê¹ÓÃµÇÂ¼Æ¾Ö¤ code »ñÈ¡ session_key ºÍ openid
+     */
     public final static String code_2_sessionkey_url = "https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code";
 }

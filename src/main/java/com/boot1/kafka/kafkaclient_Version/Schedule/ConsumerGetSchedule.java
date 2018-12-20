@@ -10,14 +10,17 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class ConsumerGetSchedule{
+public class ConsumerGetSchedule {
 
     @Autowired
     private MyKafkaConsumer myKafkaConsumer;
 
-    @Scheduled(cron = "5 * * * * ?")
-    public void cron(){
-        System.out.println("START----------------Schedule");
-        myKafkaConsumer.get();
-    }
+    /**
+     * kafka消费者定时任务
+     * */
+//    @Scheduled(cron = "5 * * * * ?")
+//    public void cron(){
+//        System.out.println("START----------------Schedule");
+//        myKafkaConsumer.get();
+//    }
 }

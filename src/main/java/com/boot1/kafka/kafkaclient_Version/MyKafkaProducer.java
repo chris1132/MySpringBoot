@@ -18,15 +18,15 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class MyKafkaProducer{
+public class MyKafkaProducer {
 
     @Autowired
     private KafKaProducerPropertiesBean producerPro;
 
     private Properties producerProps;
 
-    public Properties getproducerProperties(){
-        if(null == producerProps){
+    public Properties getproducerProperties() {
+        if (null == producerProps) {
             producerProps = new Properties();
             producerProps.put("bootstrap.servers", producerPro.getBootstrapServer());
             producerProps.put("acks", producerPro.getAcks());
@@ -40,12 +40,12 @@ public class MyKafkaProducer{
         return producerProps;
     }
 
-    public String send(String value){
-        try{
+    public String send(String value) {
+        try {
             Properties props = this.getproducerProperties();
-            Producer<String,String> producer = new KafkaProducer<String, String>(props);
-            for(int i=0;i<10;i++){
-                ProducerRecord<String,String> msg = new ProducerRecord<String, String>(TopicEnum.TOPIC_ONE.getName(),String.valueOf(i),value+"__"+i);
+            Producer<String, String> producer = new KafkaProducer<String, String>(props);
+            for (int i = 0; i < 10; i++) {
+                ProducerRecord<String, String> msg = new ProducerRecord<String, String>(TopicEnum.TOPIC_ONE.getName(), String.valueOf(i), value + "__" + i);
                 producer.send(msg);
 //                producer.send(msg, new Callback() {
 //                    @Override
@@ -58,18 +58,17 @@ public class MyKafkaProducer{
 //                    }
 //                });
             }
-            List<PartitionInfo> partitions = new ArrayList<PartitionInfo>() ;
+            List<PartitionInfo> partitions = new ArrayList<PartitionInfo>();
             partitions = producer.partitionsFor(TopicEnum.TOPIC_ONE.getName());
             System.out.println("START----------------partitions");
-            for(PartitionInfo p:partitions)
-            {
+            for (PartitionInfo p : partitions) {
                 System.out.println(p);
             }
             System.out.println("END----------------partitions");
             producer.close(100, TimeUnit.MILLISECONDS);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             return "succ";
         }
     }

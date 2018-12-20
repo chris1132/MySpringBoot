@@ -1,7 +1,6 @@
 package com.boot1.rpc.netty_zookeeper_spring.client;
 
 
-
 import com.boot1.rpc.netty_zookeeper_spring.client.proxy.IAsyncObjectProxy;
 import com.boot1.rpc.netty_zookeeper_spring.client.proxy.ObjectProxy;
 import com.boot1.rpc.netty_zookeeper_spring.registry.ServiceDiscovery;
@@ -18,7 +17,7 @@ public class RpcClient {
 
     private String serverAddress;
     private ServiceDiscovery serviceDiscovery;
-    private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 8, 500L, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2<<15));
+    private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8, 8, 500L, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(2 << 15));
 
     public RpcClient(String serverAddress) {
         this.serverAddress = serverAddress;
@@ -41,11 +40,11 @@ public class RpcClient {
         return new ObjectProxy<T>(interfaceClass);
     }
 
-    public static <T> IAsyncObjectProxy createAsync(){
+    public static <T> IAsyncObjectProxy createAsync() {
         return new ObjectProxy<T>();
     }
 
-    public static void submit(Runnable task){
+    public static void submit(Runnable task) {
         threadPoolExecutor.submit(task);
     }
 

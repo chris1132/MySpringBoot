@@ -8,7 +8,7 @@
         <result property="grade" column="grade"/>
     </resultMap>
 
-    <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
         id, name, age, grade
     </sql>
     <select id="getStudentById" parameterType="int" resultMap="StudentMap">

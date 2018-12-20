@@ -8,5 +8,6 @@ import com.boot1.rpc.netty_zookeeper_spring.client.RPCFuture;
  */
 public interface IAsyncObjectProxy {
     public RPCFuture call(String funcName, Object... args);
-    public RPCFuture call(String className,String funcName, Object... args);
+
+    public RPCFuture call(String className, String funcName, Object... args);
 }

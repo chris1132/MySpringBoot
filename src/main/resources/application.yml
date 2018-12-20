@@ -1,16 +1,14 @@
 server:
   port: 8088
-  context-path: /springboot
+  serlet:
+    context-path: /springboot
 
 management:
-  port: 54001
+  server:
+    port: 54001
   health:
     mail:
       enabled: false
-
-endpoints:
-  health:
-    sensitive: false
 
 info:
   app:

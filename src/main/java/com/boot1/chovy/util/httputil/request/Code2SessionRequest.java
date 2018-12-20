@@ -7,23 +7,23 @@ public class Code2SessionRequest {
 
 
     /**
-     *å°ç¨‹åºå”¯ä¸€æ ‡è¯†
-     * */
+     * Ğ¡³ÌĞòÎ¨Ò»±êÊ¶
+     */
     private String appid;
 
     /**
-     *å°ç¨‹åºçš„ app secret
-     * */
+     * Ğ¡³ÌĞòµÄ app secret
+     */
     private String secret;
 
     /**
-     *	ç™»å½•æ—¶è·å–çš„ code
-     * */
+     * µÇÂ¼Ê±»ñÈ¡µÄ code
+     */
     private String js_code;
 
     /**
-     *é»˜è®¤å¡«å†™ä¸º authorization_code
-     * */
+     * Ä¬ÈÏÌîĞ´Îª authorization_code
+     */
     private String grant_type;
 
 

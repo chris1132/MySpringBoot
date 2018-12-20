@@ -35,7 +35,7 @@ public class SerializationUtil {
     }
 
     /**
-     * åºåˆ—åŒ–ï¼ˆå¯¹è±¡ -> å­—èŠ‚æ•°ç»„ï¼‰
+     * ĞòÁĞ»¯£¨¶ÔÏó -> ×Ö½ÚÊı×é£©
      */
     @SuppressWarnings("unchecked")
     public static <T> byte[] serialize(T obj) {
@@ -52,7 +52,7 @@ public class SerializationUtil {
     }
 
     /**
-     * ååºåˆ—åŒ–ï¼ˆå­—èŠ‚æ•°ç»„ -> å¯¹è±¡ï¼‰
+     * ·´ĞòÁĞ»¯£¨×Ö½ÚÊı×é -> ¶ÔÏó£©
      */
     public static <T> T deserialize(byte[] data, Class<T> cls) {
         try {

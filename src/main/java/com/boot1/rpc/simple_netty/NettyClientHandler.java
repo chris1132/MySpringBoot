@@ -11,20 +11,19 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
 
-
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception{
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf bbf = (ByteBuf) msg;
         byte[] res = new byte[bbf.readableBytes()];
         bbf.readBytes(res);
-        System.out.println("NettyClientHandler-----------------"+new String(res));
+        System.out.println("NettyClientHandler-----------------" + new String(res));
         bbf.release();
     }
 
 
-    // è¿æ¥æˆåŠŸåï¼Œå‘serverå‘é€æ¶ˆæ¯
+    // Á¬½Ó³É¹¦ºó£¬Ïòserver·¢ËÍÏûÏ¢
     @Override
-    public void channelActive(ChannelHandlerContext ctx)throws Exception{
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
         String msg = "hello Server my name is wch \n ---from client";
         ByteBuf encode = ctx.alloc().buffer(4 * msg.length());
         encode.writeBytes(msg.getBytes());
@@ -34,7 +33,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        // å½“å‡ºç°å¼‚å¸¸å°±å…³é—­è¿æ¥
+        // µ±³öÏÖÒì³£¾Í¹Ø±ÕÁ¬½Ó
         cause.printStackTrace();
         ctx.close();
     }

@@ -1,13 +1,9 @@
 package com.boot1.config.redis_config;
 
-import com.boot1.redis.RedisPropertiesBean;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.CacheManager;
 
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -15,15 +11,22 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import redis.clients.jedis.JedisPoolConfig;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
 
 import java.lang.reflect.Method;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -32,36 +35,13 @@ import java.lang.reflect.Method;
 
 @Configuration
 @EnableCaching
-public class RedisConfig extends CachingConfigurerSupport{
-//
-//    public static Logger logger = LoggerFactory.getLogger(RedisConfig.class);
-//    @Bean
-//    @ConfigurationProperties(prefix="spring.redis")
-//    public JedisPoolConfig getRedisConfig(){
-//        JedisPoolConfig config = new JedisPoolConfig();
-//        return config;
-//    }
-//
-//    @Bean
-//    @ConfigurationProperties(prefix="spring.redis")
-//    public JedisConnectionFactory getConnectionFactory(){
-//        JedisConnectionFactory factory = new JedisConnectionFactory();
-//        JedisPoolConfig config = getRedisConfig();
-//        factory.setPoolConfig(config);
-//        logger.info("JedisConnectionFactory bean init success.");
-//        return factory;
-//    }
-//
-//    @Bean
-//    public RedisTemplate<?, ?> getRedisTemplate(){
-//        RedisTemplate<?,?> template = new StringRedisTemplate(getConnectionFactory());
-//        return template;
-//    }
+public class RedisConfig extends CachingConfigurerSupport {
 
     @Autowired
-    private RedisPropertiesBean redisPropertiesBean;
+    private JedisConnectionFactory jedisConnectionFactory;
+
     /**
-     * ÁîüÊàêkeyÁöÑÁ≠ñÁï•
+     * …˙≥…keyµƒ≤ﬂ¬‘
      *
      * @return
      */
@@ -82,45 +62,65 @@ public class RedisConfig extends CachingConfigurerSupport{
     }
 
     @SuppressWarnings("rawtypes")
+// springboot 1
+// @Bean
+//    public CacheManager cacheManager(RedisTemplate redisTemplate) {
+//        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
+//        /**…Ë÷√ª∫¥Êπ˝∆⁄ ±º‰ */
+//        cacheManager.setDefaultExpiration(60);
+////        Map<String,Long> map=new HashMap<String, Long>();
+////        map.put("expire",60L);
+////        cacheManager.setExpires(map);
+//        return cacheManager;
+//    }
     @Bean
-    public CacheManager cacheManager(RedisTemplate redisTemplate){
-        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        /**ËÆæÁΩÆÁºìÂ≠òËøáÊúüÊó∂Èó¥ */
-        cacheManager.setDefaultExpiration(60);
-//        Map<String,Long> map=new HashMap<String, Long>();
-//        map.put("expire",60L);
-//        cacheManager.setExpires(map);
-        return cacheManager;
+    public CacheManager cacheManager(JedisConnectionFactory factory){
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
+        config = config.entryTtl(Duration.ofMillis(1)).disableCachingNullValues();
+
+        Set<String> cacheNames = new HashSet<>();
+        cacheNames.add("my-redis-cache1");
+        cacheNames.add("my-redis-cache2");
+
+        Map<String,RedisCacheConfiguration> configurationMap = new HashMap<>();
+        configurationMap.put("my-redis-cache1",config);
+        configurationMap.put("my-redis-cache2",config.entryTtl(Duration.ofSeconds(120)));
+
+        RedisCacheManager redisCacheManager = RedisCacheManager.builder(factory)
+                .initialCacheNames(cacheNames)
+                .withInitialCacheConfigurations(configurationMap)
+                .build();
+
+        return redisCacheManager;
     }
 
+
     @Bean
-    public RedisTemplate<String,String> redisTemplate(RedisConnectionFactory factory){
-        StringRedisTemplate template = new StringRedisTemplate(factory);
-        /**ËÆæÁΩÆÂ∫èÂàóÂåñÂ∑•ÂÖ∑*/
-        setSerializer(template);
-        template.afterPropertiesSet();
-        return template;
+    public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+        RedisTemplate<String,Object> redisTemplate = new RedisTemplate<String,Object>();
+        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+        /**…Ë÷√–Ú¡–ªØπ§æﬂ*/
+        setSerializer(redisTemplate);
+        return redisTemplate;
     }
 
-    private void setSerializer(StringRedisTemplate temple){
-        @SuppressWarnings({"rawtypes","unchecked"})
+    private void setSerializer(RedisTemplate redisTemplate) {
+        @SuppressWarnings({"rawtypes", "unchecked"})
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
-        temple.setValueSerializer(jackson2JsonRedisSerializer);
+
+        RedisSerializer stringSerializer = new StringRedisSerializer();
+        //key–Ú¡–ªØ
+        redisTemplate.setKeySerializer(stringSerializer);
+        //value–Ú¡–ªØ
+        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
+        //Hash key–Ú¡–ªØ
+        redisTemplate.setHashKeySerializer(stringSerializer);
+        //Hash value–Ú¡–ªØ
+        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
+        redisTemplate.afterPropertiesSet();
     }
-
-    @Bean
-    public JedisConnectionFactory redisConnectionFactory() {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setHostName(redisPropertiesBean.getHost());
-        factory.setPort(redisPropertiesBean.getPort());
-        factory.setPassword(redisPropertiesBean.getPassword());
-        factory.setTimeout(redisPropertiesBean.getTimeout()); //ËÆæÁΩÆËøûÊé•Ë∂ÖÊó∂Êó∂Èó¥
-        return factory;
-    }
-
-
 }

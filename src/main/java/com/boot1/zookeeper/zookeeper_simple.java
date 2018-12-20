@@ -10,15 +10,15 @@ import java.io.IOException;
  */
 public class zookeeper_simple {
 
-    public static void main(String[] args) throws IOException,InterruptedException,KeeperException {
-        ZooKeeper zk = new ZooKeeper("127.0.0.1:2181",30000,new MyWatch());
+    public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
+        ZooKeeper zk = new ZooKeeper("127.0.0.1:2181", 30000, new MyWatch());
         String node = "/node2";
-        Stat stat = zk.exists(node,false);
-        if(null == stat){
-            String createR = zk.create(node,"boot1".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.PERSISTENT);
+        Stat stat = zk.exists(node, false);
+        if (null == stat) {
+            String createR = zk.create(node, "boot1".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
             System.out.print(createR);
         }
-        byte b[] = zk.getData(node,false,stat);
+        byte b[] = zk.getData(node, false, stat);
         System.out.println(new String(b));
         zk.close();
     }

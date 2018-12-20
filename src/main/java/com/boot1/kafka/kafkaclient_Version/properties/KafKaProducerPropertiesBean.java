@@ -104,7 +104,6 @@ public class KafKaProducerPropertiesBean {
     }
 
 
-
     @Override
     public String toString() {
         return "KafKaProducerPropertiesBean{" +
